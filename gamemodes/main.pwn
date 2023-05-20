@@ -53,7 +53,7 @@ main() {
 	print("	  Breno Pereira	(Eddye)             ");
 	print("		and GitHub Colabs               ");
 	print("				                        ");
-	print("        Open-RP                      ");
+	print("        Open-RP 0.1                  ");
 	print("		An Open Source Gamemode         ");
 	print("------------------------------------\n");
 }
