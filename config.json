@@ -50,7 +50,7 @@
     },
     "max_bots": 0,
     "max_players": 50,
-    "name": "Legacy Games - Need For Speed SA (0.1)",
+    "name": "OpenRP - 0.1a",
     "network": {
         "acks_limit": 3000,
         "aiming_sync_rate": 30,

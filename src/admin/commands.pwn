@@ -19,3 +19,18 @@ CMD:v (playerid, params[]) {
     PutPlayerInVehicle(playerid, veh, 0);
 	return true;
 }
+
+CMD:kick(playerid, params[]) {
+    new targetid;
+    if (sscanf(params, "u", targetid)) {
+        if (IsPlayerConnected(targetid)) {
+            if (IsAdmin(playerid))
+                Kick(targetid);
+            else
+                SendClientMessage(playerid, COLOR_RED, "Você não tem permissão para expulsar jogadores.");
+        }   else
+                SendClientMessage(playerid, COLOR_RED, "O jogador alvo não está online.");
+            else
+                SendClientMessage(playerid, COLOR_RED, "Uso correto: /kick [ID do jogador]");
+    return true;
+}
