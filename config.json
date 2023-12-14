@@ -50,7 +50,7 @@
     },
     "max_bots": 0,
     "max_players": 50,
-    "name": "open.mp server",
+    "name": "Legacy RPG - 0.1a",
     "network": {
         "acks_limit": 3000,
         "aiming_sync_rate": 30,
@@ -78,16 +78,16 @@
     "pawn": {
         "legacy_plugins": [],
         "main_scripts": [
-            "test 1"
+            "main"
         ],
         "side_scripts": []
     },
     "rcon": {
         "allow_teleport": false,
         "enable": false,
-        "password": "changeme"
+        "password": "thenewlegacy123"
     },
     "sleep": 5.0,
     "use_dyn_ticks": true,
-    "website": "open.mp"
+    "website": "legacygames.com"
 }
