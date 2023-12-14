@@ -1,5 +1,5 @@
-#include "../../src/utils/skins.pwn"
-#include "../../src/utils/vehicles.pwn"
+#include "..\..\src\utils\skins.pwn"
+#include "..\..\src\utils\vehicles.pwn"
 
 CMD:v (playerid, params[]) {
     new	Float:x, Float:y, Float:z, Float:a, idx[100], veh;
@@ -20,17 +20,18 @@ CMD:v (playerid, params[]) {
 	return true;
 }
 
-CMD:kick(playerid, params[]) {
+/*CMD:kick(playerid, params[]) {
     new targetid;
     if (sscanf(params, "u", targetid)) {
         if (IsPlayerConnected(targetid)) {
             if (IsAdmin(playerid))
                 Kick(targetid);
             else
-                SendClientMessage(playerid, COLOR_RED, "Você não tem permissão para expulsar jogadores.");
-        }   else
-                SendClientMessage(playerid, COLOR_RED, "O jogador alvo não está online.");
+                SendClientMessage(playerid, 0xFF0000AA, "Você não tem permissão para expulsar jogadores.");
             else
-                SendClientMessage(playerid, COLOR_RED, "Uso correto: /kick [ID do jogador]");
+                SendClientMessage(playerid, 0xFF0000AA, "O jogador alvo não está online.");
+            else
+                SendClientMessage(playerid, 0xFF0000AA, "Uso correto: /kick [ID do jogador]");
+        }
     return true;
-}
+}*/

@@ -1,4 +1,4 @@
-#include <a_samp>
+#include <open.mp>
 
 //------------------------------------------------------------------------------
 // Defines
@@ -7,7 +7,6 @@
 #endif
 #define MAX_PLAYERS	        501
 #define MAX_PLAYER_NAME     24
-#define MAX_VEHICLES        500
 #define MAX_BUSINESS        1
 #define MAX_HOUSES          1
 //------------------------------------------------------------------------------

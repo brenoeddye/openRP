@@ -8,8 +8,8 @@
 new MySQL:ConnectSQL;
 
 #include <YSI\YSI_coding\y_hooks>
-#include "../../src/data/types/dialogs.d.pwn"
-#include "../../src/data/types/player.d.pwn"
+#include "..\..\src\data\types\dialogs.d.pwn"
+#include "..\..\src\data\types\player.d.pwn"
 
 // Forwards
 forward checkAccount(playerid);
@@ -130,7 +130,7 @@ hook OnGameModeInit() {
 
 hook OnPlayerConnect(playerid) {
 	new Query[90];
-	TogglePlayerSpectating(playerid, 1); // Disable "spawn" menu when start server;
+	TogglePlayerSpectating(playerid, true); // Disable "spawn" menu when start server;
 
 	mysql_format(ConnectSQL, Query, sizeof(Query), "SELECT `Password`, `ID` FROM `Users` WHERE `Name`='%e'", GetPlayerNameEx(playerid));
     mysql_tquery(ConnectSQL, Query, "checkAccount", "i", playerid);
@@ -156,12 +156,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
             if(strlen(inputtext) < 4 || strlen(inputtext) > 24) {
                 SendClientMessage(playerid, 0xFF0000AA, "[SERVER] Escolha uma senha entre 4 a 24 caracteres.");
-                TogglePlayerSpectating(playerid, 1);
+                TogglePlayerSpectating(playerid, true);
 
                 ShowPlayerDialog(playerid, D_REGISTER, DIALOG_STYLE_INPUT, "Registro", "Digite uma senha para se registrar em nosso servidor", "Registrar", "Sair"); // Mostra o dialog para ele tentar de novo.
 
             } else {
-                TogglePlayerSpectating(playerid, 0);
+                TogglePlayerSpectating(playerid, false);
                 mysql_format(ConnectSQL, Query, sizeof(Query), "INSERT INTO `users`(`Name`,`Password`) VALUES ('%e', '%e')", GetPlayerNameEx(playerid), inputtext);
                 mysql_tquery(ConnectSQL, Query, "registerAccount", "i", playerid);
             }
@@ -171,13 +171,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 return Kick(playerid);
 
             if(!strcmp(Player[playerid][Password], inputtext, true, 24)) {
-                TogglePlayerSpectating(playerid, 0);
+                TogglePlayerSpectating(playerid, false);
                 mysql_format(ConnectSQL, Query, sizeof(Query), "SELECT * FROM users WHERE Name='%e'", GetPlayerNameEx(playerid));
                 mysql_tquery(ConnectSQL, Query, "loadAccount", "i", playerid);
 
                 SendClientMessage(playerid, 0x80FF00AA, "[Server] Logado com sucesso.");
             } else {
-                TogglePlayerSpectating(playerid, 1);
+                TogglePlayerSpectating(playerid, true);
                 SendClientMessage(playerid, 0xFF0000AA, "[SERVER] Senha errada, tente novamente.");
                 ShowPlayerDialog(playerid, D_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "Digite sua senha para entrar em nosso servidor.", "Confirmar", "Sair");
             }

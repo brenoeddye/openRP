@@ -50,7 +50,7 @@
     },
     "max_bots": 0,
     "max_players": 50,
-    "name": "OpenRP - 0.1a",
+    "name": "open.mp server",
     "network": {
         "acks_limit": 3000,
         "aiming_sync_rate": 30,
@@ -76,18 +76,16 @@
     },
     "password": "",
     "pawn": {
-        "legacy_plugins": [
-            "mysql", "sscanf", "crashdetect"
-        ],
+        "legacy_plugins": [],
         "main_scripts": [
-            "main"
+            "test 1"
         ],
         "side_scripts": []
     },
     "rcon": {
         "allow_teleport": false,
         "enable": false,
-        "password": "password"
+        "password": "changeme"
     },
     "sleep": 5.0,
     "use_dyn_ticks": true,
