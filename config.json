@@ -76,7 +76,10 @@
     },
     "password": "",
     "pawn": {
-        "legacy_plugins": [],
+        "legacy_plugins": [
+            "mysql",
+            "sscanf"
+        ],
         "main_scripts": [
             "main"
         ],
