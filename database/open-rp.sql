@@ -11,15 +11,18 @@ CREATE TABLE `users`(
     `PosY` float DEFAULT 252.0263,
     `PosZ` float DEFAULT 35.3203,
     `PosA` float DEFAULT 91.2125
+    `JobID` int(4) DEFAULT 0,
+    `JobXP` int(4) DEFAULT 0,
+    `JobLVL` int(4) DEFAULT 0
 );
 
 CREATE TABLE `houses` (
     `ID` INT AUTO_INCREMENT PRIMARY KEY,
-    `Type` INT,
-    `OwnerID` INT,
-    `Price` INT,
-    `InteriorID` INT,
-    `PosX` FLOAT,
-    `PosY` FLOAT,
-    `PosZ` FLOAT
+    `Type` int(1) DEFAULT 0,
+    `OwnerID` int(10) DEFAULT 0,
+    `Price` int(24) DEFAULT 0,
+    `InteriorID` int(2) DEFAULT 0,
+    `PosX` float,
+    `PosY` float,
+    `PosZ` float
 );

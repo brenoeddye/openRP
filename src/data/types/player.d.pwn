@@ -12,6 +12,10 @@ enum playerData {
     Float:PosZ,
     Float:PosA,
 
+    JobID,
+    JobXP,
+    JobLVL,
+
     bool:isLogged
 }
 
