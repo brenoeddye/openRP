@@ -64,8 +64,9 @@ hook OnGameModeInit() {
 
 //------------------------------------------------------------------------------
 
-// Database
+// Data
 #include "../../src/data/database/auth.pwn"
+#include "../../src/data/properties/house.pwn"
 
 // Admin
 #include "../../src/admin/data.pwn"
