@@ -1,4 +1,4 @@
-CMD:v (playerid, params[]) {
+YCMD:v (playerid, params[]) {
     new	Float:x, Float:y, Float:z, Float:a, idx[100], veh;
     if(sscanf(params, "s[100]", idx)) return SendClientMessage(playerid, -1, "[X] Use: /v [Nome do Veículo]");
     if(veh > 0) {
@@ -10,7 +10,7 @@ CMD:v (playerid, params[]) {
     new vehicleName = GetVehicleModelIDFromName(idx);
     if(vehicleName < 400 || vehicleName > 611) return SendClientMessage(playerid, -1, "[X] Você deve digitar o nome ou o id do veículo de 400 até 611!");
 
-    veh = CreateVehicle(vehicleName, x, y, z + 2.0, a, 3, 3, 10000, 0);
+    veh = CreateVehicle(vehicleName, x, y, z + 2.0, a, 3, 3, 10000, false);
 
     LinkVehicleToInterior(veh, GetPlayerInterior(playerid));
     PutPlayerInVehicle(playerid, veh, 0);
@@ -41,15 +41,11 @@ YCMD:ch(playerid, params[]) {
 
     if(sscanf(params, "k<u>", price)) return SendClientMessage(playerid, COLOR_ERROR, "Use: /ch [preço]");
 
-    new Float:x, Float:y, Float:z, Query[250];
+    new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
 
-    mysql_format(ConnectSQL, Query, sizeof(Query), "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %d, %f, %f, %f)", 0, 0, price, x, y, z);
-    mysql_query(ConnectSQL, Query);
+    //createHouse(playerid, 0, 0, 3, price, x, y, z);
 
-    AddStaticPickup(1273, 23, x, y, z, 0);
-    
     SendClientMessage(playerid, PRIMARY_COLOR, "Casa criada com sucesso!");
-
     return true;
 }

@@ -80,3 +80,23 @@
 [14/12/2023 23:45:21] [WARNING] mysql_connect: no password specified
 [14/12/2023 23:48:26] [WARNING] mysql_connect: no password specified
 [14/12/2023 23:49:02] [ERROR] error #1452 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (0, 0, 65535, -2425.687500, 337.614288, 37.001114)": Cannot add or update a child row: a foreign key constraint fails (`open-rp`.`houses`, CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE)
+[15/12/2023 12:52:32] [WARNING] mysql_connect: no password specified
+[15/12/2023 12:53:09] [ERROR] error #1452 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (0, 0, 65535, -2425.468506, 337.695648, 37.002113)": Cannot add or update a child row: a foreign key constraint fails (`open-rp`.`houses`, CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE)
+[15/12/2023 12:56:39] [WARNING] mysql_connect: no password specified
+[15/12/2023 12:57:31] [ERROR] error #1452 while executing query "INSERT INTO `houses` (`Type`, `OwnerID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (0, 0, 0.000000, -2425.815918, 337.711823, 37.000092)": Cannot add or update a child row: a foreign key constraint fails (`open-rp`.`houses`, CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE)
+[15/12/2023 12:59:33] [WARNING] mysql_connect: no password specified
+[15/12/2023 13:00:14] [ERROR] error #1452 while executing query "INSERT INTO `houses` (`Type`, `OwnerID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (0, 0, 65535, -2425.790283, 337.809692, 37.000122)": Cannot add or update a child row: a foreign key constraint fails (`open-rp`.`houses`, CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE)
+[15/12/2023 13:10:45] [WARNING] mysql_connect: no password specified
+[15/12/2023 14:20:55] [WARNING] mysql_connect: no password specified
+[15/12/2023 14:25:13] [ERROR] error #1136 while executing query "INSERT INTO `houses` (`Type`, `OwnerID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (0, 0, 3, 65535, -2358.568359, 679.384827, 35.164063)": Column count doesn't match value count at row 1
+[15/12/2023 14:25:13] [ERROR] cache_insert_id: no active cache
+[15/12/2023 14:25:24] [ERROR] error #1136 while executing query "INSERT INTO `houses` (`Type`, `OwnerID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (0, 0, 3, 65535, -2358.804932, 679.078735, 35.164063)": Column count doesn't match value count at row 1
+[15/12/2023 14:25:24] [ERROR] cache_insert_id: no active cache
+[15/12/2023 14:28:56] [WARNING] mysql_connect: no password specified
+[15/12/2023 14:29:45] [ERROR] cache_set_active: invalid cache id '1'
+[15/12/2023 14:29:45] [ERROR] error #1136 while executing query "INSERT INTO `houses` (`Type`, `OwnerID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (0, 0, 3, 65535, -2358.612549, 679.466492, 35.164063)": Column count doesn't match value count at row 1
+[15/12/2023 14:29:45] [ERROR] cache_insert_id: no active cache
+[15/12/2023 14:29:45] [ERROR] cache_set_active: invalid cache id '1'
+[15/12/2023 14:32:03] [WARNING] mysql_connect: no password specified
+[15/12/2023 14:33:33] [ERROR] cache_set_active: invalid cache id '1'
+[15/12/2023 15:16:15] [WARNING] mysql_connect: no password specified

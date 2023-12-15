@@ -21,7 +21,5 @@ CREATE TABLE `houses` (
     `InteriorID` INT,
     `PosX` FLOAT,
     `PosY` FLOAT,
-    `PosZ` FLOAT,
-
-    FOREIGN KEY (`OwnerID`) REFERENCES `users`(`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+    `PosZ` FLOAT
 );
