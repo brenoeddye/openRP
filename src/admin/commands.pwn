@@ -1,6 +1,3 @@
-#include "..\..\src\utils\skins.pwn"
-#include "..\..\src\utils\vehicles.pwn"
-
 CMD:v (playerid, params[]) {
     new	Float:x, Float:y, Float:z, Float:a, idx[100], veh;
     if(sscanf(params, "s[100]", idx)) return SendClientMessage(playerid, -1, "[X] Use: /v [Nome do Veículo]");
@@ -20,18 +17,39 @@ CMD:v (playerid, params[]) {
 	return true;
 }
 
-/*CMD:kick(playerid, params[]) {
-    new targetid;
-    if (sscanf(params, "u", targetid)) {
-        if (IsPlayerConnected(targetid)) {
-            if (IsAdmin(playerid))
-                Kick(targetid);
-            else
-                SendClientMessage(playerid, 0xFF0000AA, "Você não tem permissão para expulsar jogadores.");
-            else
-                SendClientMessage(playerid, 0xFF0000AA, "O jogador alvo não está online.");
-            else
-                SendClientMessage(playerid, 0xFF0000AA, "Uso correto: /kick [ID do jogador]");
-        }
+YCMD:kick(playerid, params[], help)
+{
+    if(GetAdminLevel(playerid) < 1)
+        return SendClientMessage(playerid, COLOR_ERROR, "* Você não tem permissão.");
+
+    new targetid, reason[128];
+
+    if(sscanf(params, "k<u>s[128]", targetid, reason))
+        return SendClientMessage(playerid, COLOR_ERROR, "* /kick [playerid] [motivo]");
+
+    else if(playerid == targetid)
+        return SendClientMessage(playerid, COLOR_ERROR, "* Você não pode kickar você mesmo.");
+
+    Kick(targetid);
+    return 1;
+}
+
+YCMD:ch(playerid, params[]) {
+    if(GetAdminLevel(playerid) < 1) return SendClientMessage(playerid, COLOR_ERROR, "Você não tem permissão para criar casas.");
+
+    new price;
+
+    if(sscanf(params, "k<u>", price)) return SendClientMessage(playerid, COLOR_ERROR, "Use: /ch [preço]");
+
+    new Float:x, Float:y, Float:z, Query[250];
+    GetPlayerPos(playerid, x, y, z);
+
+    mysql_format(ConnectSQL, Query, sizeof(Query), "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %d, %f, %f, %f)", 0, 0, price, x, y, z);
+    mysql_query(ConnectSQL, Query);
+
+    AddStaticPickup(1273, 23, x, y, z, 0);
+    
+    SendClientMessage(playerid, PRIMARY_COLOR, "Casa criada com sucesso!");
+
     return true;
-}*/
+}

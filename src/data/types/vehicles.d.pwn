@@ -6,4 +6,4 @@ enum vehicleData {
     Plate,
 }
 
-new Vehicle[MAX_VEHICLES][vehicleData]
+new Vehicle[MAX_VEHICLES][vehicleData];

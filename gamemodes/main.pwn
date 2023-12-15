@@ -18,35 +18,6 @@
 #include <sscanf2>
 #include <sscanffix>
 
-hook OnGameModeInit() {
-    // resets
-    UsePlayerPedAnims();
-	DisableInteriorEnterExits();
-	SetNameTagDrawDistance(40.0);
-	EnableStuntBonusForAll(false);
-
-    // gamemode
-	SetGameModeText("Roleplay");
-    SetWorldTime(0);
-	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0);
-	return true;
-}
-
-//------------------------------------------------------------------------------
-// Modules
-// Database
-#include "../../src/data/database/auth.pwn"
-
-// Admin
-#include "../../src/admin/commands.pwn"
-
-// Types
-#include "../../src/data/types/dialogs.d.pwn"
-
-// Utils
-#include "../../src/utils/skins.pwn"
-#include "../../src/utils/utils.pwn"
-
 main() {
 	print("\n-----------------------------------");
 	print("	  Breno Pereira	(Eddye)             ");
@@ -56,3 +27,48 @@ main() {
 	print("		An Open Source Gamemode         ");
 	print("------------------------------------\n");
 }
+
+hook OnGameModeInit() {
+    // resets
+    UsePlayerPedAnims();
+	DisableInteriorEnterExits();
+	SetNameTagDrawDistance(40.0);
+	EnableStuntBonusForAll(false);
+
+    // gamemode
+	SetGameModeText("RPG");
+    SetWorldTime(0);
+	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0);
+	return true;
+}
+
+//------------------------------------------------------------------------------
+// Modules
+
+// ConnectDB
+#include "../../src/data/database/database.pwn"
+
+// Types
+#include "../../src/data/types/colors.d.pwn"
+#include "../../src/data/types/dialogs.d.pwn"
+#include "../../src/data/types/houses.d.pwn"
+#include "../../src/data/types/player.d.pwn"
+#include "../../src/data/types/vehicles.d.pwn"
+
+// Utils
+#include "../../src/utils/skins.pwn"
+#include "../../src/utils/utils.pwn"
+#include "../../src/utils/skins.pwn"
+#include "../../src/utils/vehicles.pwn"
+
+//------------------------------------------------------------------------------
+
+// Database
+#include "../../src/data/database/auth.pwn"
+
+// Admin
+#include "../../src/admin/data.pwn"
+#include "../../src/admin/commands.pwn"
+
+//Player
+#include "../../src/player/commands.pwn"

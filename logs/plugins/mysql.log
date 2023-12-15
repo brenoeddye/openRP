@@ -48,3 +48,35 @@
 [14/12/2023 19:08:29] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
 [14/12/2023 19:08:33] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
 [14/12/2023 19:08:38] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[14/12/2023 19:50:59] [WARNING] mysql_connect: no password specified
+[14/12/2023 19:51:03] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[14/12/2023 19:51:07] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #1049 'Unknown database 'legacy-nfs''
+[14/12/2023 19:51:07] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #1049 'Unknown database 'legacy-nfs''
+[14/12/2023 19:51:07] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #1049 'Unknown database 'legacy-nfs''
+[14/12/2023 19:52:35] [WARNING] mysql_connect: no password specified
+[14/12/2023 19:53:45] [WARNING] mysql_connect: no password specified
+[14/12/2023 22:48:18] [WARNING] mysql_connect: no password specified
+[14/12/2023 22:49:44] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 22:50:28] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 22:58:38] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:00:26] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:01:11] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:05:52] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:06:49] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:10:01] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:10:53] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:11:13] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:11:18] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:23:09] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:23:39] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:27:04] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:28:15] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:35:58] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:36:36] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:38:20] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:38:55] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (%d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:40:11] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:40:58] [ERROR] error #1064 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES ('0', %d, %d, %f, %f, %f)": You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '%d, %d, %f, %f, %f)' at line 1
+[14/12/2023 23:45:21] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:48:26] [WARNING] mysql_connect: no password specified
+[14/12/2023 23:49:02] [ERROR] error #1452 while executing query "INSERT INTO houses (Type, OwnerID, Price, PosX, PosY, PosZ) VALUES (0, 0, 65535, -2425.687500, 337.614288, 37.001114)": Cannot add or update a child row: a foreign key constraint fails (`open-rp`.`houses`, CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE)

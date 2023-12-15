@@ -1,15 +1,4 @@
-//------------------------------------------------------------------------------
-// SQL Config
-#define HOST    "localhost"
-#define USER    "root"
-#define DB      "legacy-nfs"
-#define PASS    ""
-
-new MySQL:ConnectSQL;
-
 #include <YSI\YSI_coding\y_hooks>
-#include "..\..\src\data\types\dialogs.d.pwn"
-#include "..\..\src\data\types\player.d.pwn"
 
 // Forwards
 forward checkAccount(playerid);
@@ -42,7 +31,7 @@ public loadAccount(playerid) {
 
     cache_get_value_int(0,      "ID",       Player[playerid][ID]);
     cache_get_value_int(0,      "Money",    Player[playerid][Money]);
-    cache_get_value_int(0,      "Admin",    Player[playerid][Level]);
+    cache_get_value_int(0,      "Admin",    Player[playerid][Admin]);
     cache_get_value_int(0,      "Level",    Player[playerid][Level]);
 	cache_get_value_int(0,      "Exp",      Player[playerid][Exp]); 
     cache_get_value_int(0,      "Skin",     Player[playerid][Skin]);
@@ -114,18 +103,6 @@ stock clearAccount(playerid) {
     Player[playerid][PosA]          = 0;
 
     Player[playerid][isLogged]      = false;
-}
-
-hook OnGameModeInit() {
-    // sql
-    ConnectSQL = mysql_connect(HOST, USER, PASS, DB);
-	if(mysql_errno(ConnectSQL) != 0) {
-        print("[MySQL] Falha ao tentar estabelecer conexão com o banco de dados.");
-    } else {
-        print("[MySQL] Sucesso ao conectar com o banco de dados.");
-    }
-
-    return true;
 }
 
 hook OnPlayerConnect(playerid) {
