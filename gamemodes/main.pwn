@@ -49,6 +49,7 @@ hook OnGameModeInit() {
 #include "../../src/data/database/database.pwn"
 
 // Types
+#include "../../src/data/types/admin.d.pwn"
 #include "../../src/data/types/colors.d.pwn"
 #include "../../src/data/types/dialogs.d.pwn"
 #include "../../src/data/types/houses.d.pwn"
