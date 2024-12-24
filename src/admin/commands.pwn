@@ -35,17 +35,17 @@ YCMD:kick(playerid, params[], help)
 }
 
 YCMD:ch(playerid, params[]) {
-    if(GetAdminLevel(playerid) < 1) return SendClientMessage(playerid, COLOR_ERROR, "Você não tem permissão para criar casas.");
+    if(GetAdminLevel(playerid) < 1) 
+        return SendClientMessage(playerid, COLOR_ERROR, "Você não tem permissão para criar casas.");
 
     new price;
 
-    if(sscanf(params, "k<u>", price)) return SendClientMessage(playerid, COLOR_ERROR, "Use: /ch [preço]");
+    if(sscanf(params, "i", price)) 
+        return SendClientMessage(playerid, COLOR_ERROR, "Use: /ch [preço]");
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
 
-    //createHouse(playerid, 0, 0, 3, price, x, y, z);
-
-    SendClientMessage(playerid, PRIMARY_COLOR, "Casa criada com sucesso!");
+    createHouse(playerid, 0, 0, 3, price, x, y, z);
     return true;
 }

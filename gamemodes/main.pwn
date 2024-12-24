@@ -8,7 +8,7 @@
 #define MAX_PLAYERS	        501
 #define MAX_PLAYER_NAME     24
 #define MAX_BUSINESS        1
-#define MAX_HOUSES          1
+#define MAX_HOUSES          20
 //------------------------------------------------------------------------------
 // Libraries
 #include <a_mysql>

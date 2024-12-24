@@ -18,10 +18,10 @@ CREATE TABLE `users`(
 
 CREATE TABLE `houses` (
     `ID` INT AUTO_INCREMENT PRIMARY KEY,
-    `Type` int(1) DEFAULT 0,
-    `OwnerID` int(10) DEFAULT 0,
-    `Price` int(24) DEFAULT 0,
-    `InteriorID` int(2) DEFAULT 0,
+    `Type` TINYINT UNSIGNED DEFAULT 0,
+    `OwnerID` INT UNSIGNED DEFAULT 0,
+    `Price` INT UNSIGNED DEFAULT 0,
+    `InteriorID` TINYINT UNSIGNED DEFAULT 0,
     `PosX` float,
     `PosY` float,
     `PosZ` float
