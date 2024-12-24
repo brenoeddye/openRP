@@ -9,7 +9,7 @@
  *     This Source Code Form is subject to the terms of the Mozilla Public License,
  *     v. 2.0. If a copy of the MPL was not distributed with this file, You can
  *     obtain one at http://mozilla.org/MPL/2.0/.
- *    
+ *
  *     The original code is copyright (c) 2023, open.mp team and contributors.
  *   </license>
  *   <summary pawndoc="true">
@@ -37,9 +37,27 @@ const INVALID_TIMER                            = 0;
  * <summary>Weapons</summary>
  */
 #define WEAPON: __TAG(WEAPON):
-enum WEAPON:__WEAPON
+enum WEAPON:MAX_WEAPONS
 {
-	WEAPON_UNKNOWN                             = -1,
+	UNKNOWN_WEAPON                             = -1,
+	// Special `OnPlayerDeath` `reason` values.  NOT included in `MAX_WEAPONS`.
+	REASON_VEHICLE                             = 49,
+	REASON_HELICOPTER_BLADES                   = 50,
+	REASON_EXPLOSION                           = 51,
+	REASON_DROWN                               = 53,
+	REASON_COLLISION                           = 54,
+	REASON_SPLAT                               = 54,
+	REASON_CONNECT                             = 200,
+	REASON_DISCONNECT                          = 201,
+	REASON_SUICIDE                             = 255,
+
+	WEAPON_UNKNOWN                             = UNKNOWN_WEAPON,
+	WEAPON_VEHICLE                             = REASON_VEHICLE,
+	WEAPON_DROWN                               = REASON_DROWN,
+	WEAPON_COLLISION                           = REASON_COLLISION,
+	WEAPON_SPLAT                               = REASON_SPLAT,
+
+	// The main weapon types.  Done after the reasons so sizes are correct.
 	WEAPON_FIST                                =  0,
 	WEAPON_BRASSKNUCKLE                        =  1,
 	WEAPON_GOLFCLUB                            =  2,
@@ -85,15 +103,76 @@ enum WEAPON:__WEAPON
 	WEAPON_CAMERA                              = 43,
 	WEAPON_NIGHT_VISION_GOGGLES                = 44,
 	WEAPON_THERMAL_GOGGLES                     = 45,
-	WEAPON_PARACHUTE                           = 46,
-	WEAPON_VEHICLE                             = 49,
-	WEAPON_DROWN                               = 53,
-	WEAPON_COLLISION                           = 54,
-	WEAPON_SPLAT                               = WEAPON_COLLISION
+	WEAPON_PARACHUTE                           = 46
 }
-static stock WEAPON:_@WEAPON() { return __WEAPON; }
+static stock WEAPON:_@WEAPON() { return MAX_WEAPONS; }
 
-#define MAX_WEAPONS __WEAPON
+#define UNKNOWN_WEAPON                         (WEAPON:-1)
+
+// Special `OnPlayerDeath` `reason` values.  NOT included in `MAX_WEAPONS`.
+#define REASON_VEHICLE                         (WEAPON:49)
+#define REASON_HELICOPTER_BLADES               (WEAPON:50)
+#define REASON_EXPLOSION                       (WEAPON:51)
+#define REASON_DROWN                           (WEAPON:53)
+#define REASON_COLLISION                       (WEAPON:54)
+#define REASON_SPLAT                           (WEAPON:54)
+#define REASON_CONNECT                         (WEAPON:200)
+#define REASON_DISCONNECT                      (WEAPON:201)
+#define REASON_SUICIDE                         (WEAPON:255)
+
+// The main weapon types.
+#define WEAPON_FIST                            (WEAPON:0)
+#define WEAPON_BRASSKNUCKLE                    (WEAPON:1)
+#define WEAPON_GOLFCLUB                        (WEAPON:2)
+#define WEAPON_NITESTICK                       (WEAPON:3)
+#define WEAPON_NIGHTSTICK                      (WEAPON:3)
+#define WEAPON_KNIFE                           (WEAPON:4)
+#define WEAPON_BAT                             (WEAPON:5)
+#define WEAPON_SHOVEL                          (WEAPON:6)
+#define WEAPON_POOLSTICK                       (WEAPON:7)
+#define WEAPON_KATANA                          (WEAPON:8)
+#define WEAPON_CHAINSAW                        (WEAPON:9)
+#define WEAPON_DILDO                           (WEAPON:10)
+#define WEAPON_DILDO2                          (WEAPON:11)
+#define WEAPON_VIBRATOR                        (WEAPON:12)
+#define WEAPON_VIBRATOR2                       (WEAPON:13)
+#define WEAPON_FLOWER                          (WEAPON:14)
+#define WEAPON_CANE                            (WEAPON:15)
+#define WEAPON_GRENADE                         (WEAPON:16)
+#define WEAPON_TEARGAS                         (WEAPON:17)
+#define WEAPON_MOLTOV                          (WEAPON:18)
+#define WEAPON_MOLOTOV                         (WEAPON:18)
+#define WEAPON_COLT45                          (WEAPON:22)
+#define WEAPON_SILENCED                        (WEAPON:23)
+#define WEAPON_DEAGLE                          (WEAPON:24)
+#define WEAPON_SHOTGUN                         (WEAPON:25)
+#define WEAPON_SAWEDOFF                        (WEAPON:26)
+#define WEAPON_SHOTGSPA                        (WEAPON:27)
+#define WEAPON_UZI                             (WEAPON:28)
+#define WEAPON_MP5                             (WEAPON:29)
+#define WEAPON_AK47                            (WEAPON:30)
+#define WEAPON_M4                              (WEAPON:31)
+#define WEAPON_TEC9                            (WEAPON:32)
+#define WEAPON_RIFLE                           (WEAPON:33)
+#define WEAPON_SNIPER                          (WEAPON:34)
+#define WEAPON_ROCKETLAUNCHER                  (WEAPON:35)
+#define WEAPON_HEATSEEKER                      (WEAPON:36)
+#define WEAPON_FLAMETHROWER                    (WEAPON:37)
+#define WEAPON_MINIGUN                         (WEAPON:38)
+#define WEAPON_SATCHEL                         (WEAPON:39)
+#define WEAPON_BOMB                            (WEAPON:40)
+#define WEAPON_SPRAYCAN                        (WEAPON:41)
+#define WEAPON_FIREEXTINGUISHER                (WEAPON:42)
+#define WEAPON_CAMERA                          (WEAPON:43)
+#define WEAPON_NIGHT_VISION_GOGGLES            (WEAPON:44)
+#define WEAPON_THERMAL_GOGGLES                 (WEAPON:45)
+#define WEAPON_PARACHUTE                       (WEAPON:46)
+
+#define WEAPON_UNKNOWN UNKNOWN_WEAPON
+#define WEAPON_VEHICLE REASON_VEHICLE
+#define WEAPON_DROWN REASON_DROWN
+#define WEAPON_COLLISION REASON_COLLISION
+#define WEAPON_SPLAT REASON_SPLAT
 
 /// <p/>
 /**
@@ -101,9 +180,10 @@ static stock WEAPON:_@WEAPON() { return __WEAPON; }
  * <summary>Weapon Slots</summary>
  */
 #define WEAPON_SLOT: __TAG(WEAPON_SLOT):
-enum WEAPON_SLOT:__WEAPON_SLOT
+enum WEAPON_SLOT:MAX_WEAPON_SLOTS
 {
-	WEAPON_SLOT_UNKNOWN                        = -1,
+	UNKNOWN_WEAPON_SLOT                        = -1,
+	WEAPON_SLOT_UNKNOWN                        = UNKNOWN_WEAPON_SLOT,
 	WEAPON_SLOT_UNARMED                        =  0,
 	WEAPON_SLOT_MELEE                          =  1,
 	WEAPON_SLOT_PISTOL                         =  2,
@@ -118,9 +198,24 @@ enum WEAPON_SLOT:__WEAPON_SLOT
 	WEAPON_SLOT_GADGET                         = 11,
 	WEAPON_SLOT_DETONATOR                      = 12
 }
-static stock WEAPON_SLOT:_@WEAPON_SLOT() { return __WEAPON_SLOT; }
+static stock WEAPON_SLOT:_@WEAPON_SLOT() { return MAX_WEAPON_SLOTS; }
 
-#define MAX_WEAPON_SLOTS __WEAPON_SLOT
+#define UNKNOWN_WEAPON_SLOT                    (WEAPON_SLOT:-1)
+#define WEAPON_SLOT_UNARMED                    (WEAPON_SLOT:0)
+#define WEAPON_SLOT_MELEE                      (WEAPON_SLOT:1)
+#define WEAPON_SLOT_PISTOL                     (WEAPON_SLOT:2)
+#define WEAPON_SLOT_SHOTGUN                    (WEAPON_SLOT:3)
+#define WEAPON_SLOT_MACHINE_GUN                (WEAPON_SLOT:4)
+#define WEAPON_SLOT_ASSAULT_RIFLE              (WEAPON_SLOT:5)
+#define WEAPON_SLOT_LONG_RIFLE                 (WEAPON_SLOT:6)
+#define WEAPON_SLOT_ARTILLERY                  (WEAPON_SLOT:7)
+#define WEAPON_SLOT_EXPLOSIVES                 (WEAPON_SLOT:8)
+#define WEAPON_SLOT_EQUIPMENT                  (WEAPON_SLOT:9)
+#define WEAPON_SLOT_GIFT                       (WEAPON_SLOT:10)
+#define WEAPON_SLOT_GADGET                     (WEAPON_SLOT:11)
+#define WEAPON_SLOT_DETONATOR                  (WEAPON_SLOT:12)
+
+#define WEAPON_SLOT_UNKNOWN UNKNOWN_WEAPON_SLOT
 
 /// <p/>
 /**
@@ -130,29 +225,41 @@ static stock WEAPON_SLOT:_@WEAPON_SLOT() { return __WEAPON_SLOT; }
 #define PLAYER_MARKERS_MODE: __TAG(PLAYER_MARKERS_MODE):
 enum PLAYER_MARKERS_MODE:__PLAYER_MARKERS_MODE
 {
-	PLAYER_MARKERS_MODE_UNKNOWN                = -1,
+	UNKNOWN_PLAYER_MARKERS_MODE                = -1,
+	PLAYER_MARKERS_MODE_UNKNOWN                = UNKNOWN_PLAYER_MARKERS_MODE,
 	PLAYER_MARKERS_MODE_OFF                    =  0,
 	PLAYER_MARKERS_MODE_GLOBAL                 =  1,
 	PLAYER_MARKERS_MODE_STREAMED               =  2
 }
 static stock PLAYER_MARKERS_MODE:_@PLAYER_MARKERS_MODE() { return __PLAYER_MARKERS_MODE; }
 
+#define UNKNOWN_PLAYER_MARKERS_MODE            (PLAYER_MARKERS_MODE:-1)
+#define PLAYER_MARKERS_MODE_OFF                (PLAYER_MARKERS_MODE:0)
+#define PLAYER_MARKERS_MODE_GLOBAL             (PLAYER_MARKERS_MODE:1)
+#define PLAYER_MARKERS_MODE_STREAMED           (PLAYER_MARKERS_MODE:2)
+
+#define PLAYER_MARKERS_MODE_UNKNOWN UNKNOWN_PLAYER_MARKERS_MODE
+
 /*
-                                                                                                                                    
-    88888888ba                                                   88        88           88  88  88           88                         
-    88      "8b                                                  88        88    ,d     ""  88  ""    ,d     ""                         
-    88      ,8P                                                  88        88    88         88        88                                
-    88aaaaaa8P'  ,adPPYYba,  8b      db      d8  8b,dPPYba,      88        88  MM88MMM  88  88  88  MM88MMM  88   ,adPPYba,  ,adPPYba,  
-    88""""""'    ""     `Y8  `8b    d88b    d8'  88P'   `"8a     88        88    88     88  88  88    88     88  a8P_____88  I8[    ""  
-    88           ,adPPPPP88   `8b  d8'`8b  d8'   88       88     88        88    88     88  88  88    88     88  8PP"""""""   `"Y8ba,   
-    88           88,    ,88    `8bd8'  `8bd8'    88       88     Y8a.    .a8P    88,    88  88  88    88,    88  "8b,   ,aa  aa    ]8I  
-    88           `"8bbdP"Y8      YP      YP      88       88      `"Y8888Y"'     "Y888  88  88  88    "Y888  88   `"Ybbd8"'  `"YbbdP"'  
-                                                                                                                                        
-                                                                                                                                        
+                                                                           
+    888b      88                       88                                      
+    8888b     88                ,d     ""                                      
+    88 `8b    88                88                                             
+    88  `8b   88  ,adPPYYba,  MM88MMM  88  8b       d8   ,adPPYba,  ,adPPYba,  
+    88   `8b  88  ""     `Y8    88     88  `8b     d8'  a8P_____88  I8[    ""  
+    88    `8b 88  ,adPPPPP88    88     88   `8b   d8'   8PP"""""""   `"Y8ba,   
+    88     `8888  88,    ,88    88,    88    `8b,d8'    "8b,   ,aa  aa    ]8I  
+    88      `888  `"8bbdP"Y8    "Y888  88      "8"       `"Ybbd8"'  `"YbbdP"'  
+                                                                           
+                                                                           
 
 */
+
 /*
-native #Pawn Utilities();
+native # Pawn Utilities();
+native         Pawn Utilities(
+native      ====================(
+native
 */
 
 /**
@@ -161,14 +268,24 @@ native #Pawn Utilities();
  * <param name="string">The string to print</param>
  * <seealso name="printf" />
  */
-#if defined _console_included
+#if defined __print
 	// Fixes a pawndoc bug - comments on `#ifdef`ed out functions are still put
 	// in the output, unattached to any function.  So make a function.
 	/* */ native __open_mp_unused_print(const string[]);
 	#define __open_mp_unused_print
+	#define print( __print(
+	#define _ALS_print
 #else
 	native print(const string[]);
 #endif
+
+/**
+ * <library>omp_core</library>
+ * <summary>Prints a string to the server console (not in-game chat) and logs (server_log.txt).</summary>
+ * <param name="string">The string to print</param>
+ * <seealso name="printf" />
+ */
+native Print(const string[]) = print;
 
 /**
  * <library>omp_core</library>
@@ -203,14 +320,44 @@ native #Pawn Utilities();
  * number of decimal places beeing shown of a float, you can add <b><c>.&lt;max number&gt;</c></b> between
  * the <b><c>%</c></b> and the <b><c>f</c></b>. (example: <b><c>%.2f</c></b>)</remarks>
  */
-#if defined _console_included
-	// Fixes a pawndoc bug - comments on `#ifdef`ed out functions are still put
-	// in the output, unattached to any function.  So make a function.
-	/* */ native __open_mp_unused_printf(const format[], OPEN_MP_TAGS:...);
-	#define __open_mp_unused_printf
-#else
-	native printf(const format[], OPEN_MP_TAGS:...);
-#endif
+native __printf(const format[], OPEN_MP_TAGS:...) = printf;
+#define printf( __printf(
+#define _ALS_printf
+
+/**
+ * <library>omp_core</library>
+ * <summary>Outputs a formatted string on the console (the server window, not the in-game chat).</summary>
+ * <param name="format">The format string</param>
+ * <param name="">Indefinite number of arguments of any tag</param>
+ * <seealso name="print" />
+ * <seealso name="format" />
+ * <remarks>The format string or its output should not exceed 1024 characters.  Anything beyond that
+ * length can lead to a server to crash.</remarks>
+ * <remarks>This function doesn't support <a href="#strpack">packed</a> strings.</remarks>
+ * <remarks>
+ *   <b>Format Specifiers:</b><br />
+ *   <ul>
+ *     <li><b><c>%i</c></b> - integer (whole number)</li>
+ *     <li><b><c>%d</c></b> - integer (whole number).</li>
+ *     <li><b><c>%s</c></b> - string</li>
+ *     <li><b><c>%f</c></b> - floating-point number (Float: tag)</li>
+ *     <li><b><c>%c</c></b> - ASCII character</li>
+ *     <li><b><c>%x</c></b> - hexadecimal number</li>
+ *     <li><b><c>%b</c></b> - binary number</li>
+ *     <li><b><c>%%</c></b> - literal <b><c>%</c></b></li>
+ *     <li><b><c>%q</c></b> - escape a text for SQLite. (Added in <b>0.3.7 R2</b>)</li>
+ *   </ul>
+ * </remarks>
+ * <remarks>The values for the placeholders follow in the exact same order as parameters in the call.
+ *  For example, <b><c>"I am %i years old"</c></b> - the <b><c>%i</c></b> will be replaced with an Integer
+ * variable, which is the person's age.</remarks>
+ * <remarks>You may optionally put a number between the <b><c>%</c></b> and the letter of the placeholder
+ * code.  This number indicates the field width; if the size of the parameter to print at the position
+ * of the placeholder is smaller than the field width, the field is expanded with spaces.  To cut the
+ * number of decimal places beeing shown of a float, you can add <b><c>.&lt;max number&gt;</c></b> between
+ * the <b><c>%</c></b> and the <b><c>f</c></b>. (example: <b><c>%.2f</c></b>)</remarks>
+ */
+native PrintF(const format[], OPEN_MP_TAGS:...) = printf;
 
 #if !defined _console_included
 	#define _console_included
@@ -253,6 +400,41 @@ native format(output[], len = sizeof (output), const format[], {Float, _}:...);
 
 /**
  * <library>omp_core</library>
+ * <summary>Formats a string to include variables and other strings inside it.</summary>
+ * <param name="output">The string to output the result to</param>
+ * <param name="len">The maximum length output can contain</param>
+ * <param name="format">The format string</param>
+ * <param name="">Indefinite number of arguments of any tag</param>
+ * <seealso name="print" />
+ * <seealso name="printf" />
+ * <remarks>This function doesn't support <a href="#strpack">packed strings</a>.</remarks>
+ * <remarks>
+ *   <b>Format Specifiers:</b><br />
+ *   <ul>
+ *     <li><b><c>%i</c></b> - integer (whole number)</li>
+ *     <li><b><c>%d</c></b> - integer (whole number).</li>
+ *     <li><b><c>%s</c></b> - string</li>
+ *     <li><b><c>%f</c></b> - floating-point number (Float: tag)</li>
+ *     <li><b><c>%c</c></b> - ASCII character</li>
+ *     <li><b><c>%x</c></b> - hexadecimal number</li>
+ *     <li><b><c>%b</c></b> - binary number</li>
+ *     <li><b><c>%%</c></b> - literal <b><c>%</c></b></li>
+ *     <li><b><c>%q</c></b> - escape a text for SQLite. (Added in <b>0.3.7 R2</b>)</li>
+ *   </ul>
+ * </remarks>
+ * <remarks>The values for the placeholders follow in the exact same order as parameters in the call.
+ *  For example, <b><c>"I am %i years old"</c></b> - the <b><c>%i</c></b> will be replaced with an Integer
+ * variable, which is the person's age.</remarks>
+ * <remarks>You may optionally put a number between the <b><c>%</c></b> and the letter of the placeholder
+ * code.  This number indicates the field width; if the size of the parameter to print at the position
+ * of the placeholder is smaller than the field width, the field is expanded with spaces.  To cut the
+ * number of decimal places beeing shown of a float, you can add <b><c>.&lt;max number&gt;</c></b> between
+ * the <b><c>%</c></b> and the <b><c>f</c></b>. (example: <b><c>%.2f</c></b>)</remarks>
+ */
+native Format(output[], len = sizeof (output), const format[], {Float, _}:...) = format;
+
+/**
+ * <library>omp_core</library>
  * <summary>Sets a 'timer' to call a function after some time.  Can be set to repeat.</summary>
  * <param name="functionName">Name of the function to call as a string.  This must be a public function
  * (forwarded).  A null string here will crash the server</param>
@@ -260,9 +442,6 @@ native format(output[], len = sizeof (output), const format[], {Float, _}:...);
  * <param name="repeating">Whether the timer should repeat or not</param>
  * <seealso name="SetTimerEx" />
  * <seealso name="KillTimer" />
- * <remarks>Timer intervals are not accurate (roughly 25% off).  There's a fix available
- * <a href="http://forum.sa-mp.com/showthread.php?t=289675">here</a>.
- * </remarks>
  * <remarks>Timer IDs are never used twice.  You can use <a href="#KillTimer">KillTimer</a> on a timer
  * ID and it won't matter if it's running or not. </remarks>
  * <remarks>The function that should be called must be public. </remarks>
@@ -285,9 +464,6 @@ native SetTimer(const functionName[], interval, bool:repeating);
  * <seealso name="KillTimer" />
  * <seealso name="CallLocalFunction" />
  * <seealso name="CallRemoteFunction" />
- * <remarks>Timer intervals are not accurate (roughly 25% off).  There's a fix available
- * <a href="http://forum.sa-mp.com/showthread.php?t=289675">here</a>.
- * </remarks>
  * <remarks>Timer IDs are never used twice.  You can use KillTimer() on a timer ID and it won't matter
  * if it's running or not. </remarks>
  * <remarks>The function that should be called must be public. </remarks>
@@ -319,7 +495,7 @@ native SetTimerEx(const functionName[], interval, bool:repeating, const specifie
  * <seealso name="SetTimerEx" />
  * <returns>This function always returns <b><c>0</c></b>.</returns>
  */
-native void:KillTimer(timerid);
+native bool:KillTimer(timerid);
 
 /**
  * <library>omp_core</library>
@@ -402,7 +578,20 @@ native CallLocalFunction(const functionName[], const specifiers[] = "", OPEN_MP_
  * <seealso name="TextDrawShowForAll" />
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  */
-native void:GameTextForAll(const format[], time, style, OPEN_MP_TAGS:...);
+native bool:GameTextForAll(const format[], time, style, OPEN_MP_TAGS:...);
+
+/**
+ * <library>omp_core</library>
+ * <summary>Shows 'game text' (on-screen text) for a certain length of time for all players.</summary>
+ * <param name="format">The text to be displayed or formatted</param>
+ * <param name="time">The duration of the text being shown in milliseconds</param>
+ * <param name="style">The style of text to be displayed</param>
+ * <seealso name="GameTextForPlayer" />
+ * <seealso name="TextDrawShowForAll" />
+ * <returns>This function always returns <b><c>1</c></b>.</returns>
+ */
+#pragma deprecated Use `GameTextForAll`
+native bool:GameTextForAllf(const format[], time, style, OPEN_MP_TAGS:...) = GameTextForAll;
 
 /**
  * <library>omp_player</library>
@@ -413,7 +602,7 @@ native void:GameTextForAll(const format[], time, style, OPEN_MP_TAGS:...);
  * <seealso name="HideGameTextForPlayer" />
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  */
-native void:HideGameTextForAll(style);
+native bool:HideGameTextForAll(style);
 
 /**
  * <library>omp_core</library>
@@ -427,7 +616,22 @@ native void:HideGameTextForAll(style);
  *  It will result in crashes otherwise.</remarks>
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  */
-native void:SendClientMessageToAll(colour, const format[], OPEN_MP_TAGS:...);
+native bool:SendClientMessageToAll(colour, const format[], OPEN_MP_TAGS:...);
+
+/**
+ * <library>omp_player</library>
+ * <summary>Displays a message in chat to all players.  This is a multi-player equivalent of
+ * <a href="#SendClientMessage">SendClientMessage</a>.</summary>
+ * <param name="colour">The colour of the message (<b>RGBA</b>)</param>
+ * <param name="format">The message to show (<b>max 144 characters</b>).  Optionally formatted.</param>
+ * <seealso name="SendClientMessage" />
+ * <seealso name="SendPlayerMessageToAll" />
+ * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
+ *  It will result in crashes otherwise.</remarks>
+ * <returns>This function always returns <b><c>1</c></b>.</returns>
+ */
+#pragma deprecated Use `SendClientMessageToAll`
+native bool:SendClientMessageToAllf(colour, const format[], OPEN_MP_TAGS:...) = SendClientMessageToAll;
 
 /**
  * <library>omp_core</library>
@@ -445,10 +649,25 @@ native bool:SendPlayerMessageToAll(senderid, const format[], OPEN_MP_TAGS:...);
 
 /**
  * <library>omp_core</library>
+ * <summary>Sends a message in the name of a player to all other players on the server.  The line will
+ * start with the sender's name in their colour, followed by the message in white.</summary>
+ * <param name="senderid">The ID of the sender.  If invalid, the message will not be sent</param>
+ * <param name="format">The message that will be sent.  May be optionally formatted.</param>
+ * <seealso name="SendPlayerMessageToPlayer" />
+ * <seealso name="SendClientMessageToAll" />
+ * <seealso name="OnPlayerText" />
+ * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
+ *  It will result in crashes otherwise.</remarks>
+ */
+#pragma deprecated Use `SendPlayerMessageToAll`
+native bool:SendPlayerMessageToAllf(senderid, const format[], OPEN_MP_TAGS:...) = SendPlayerMessageToAll;
+
+/**
+ * <library>omp_core</library>
  * <summary>Adds a death to the 'killfeed' on the right-hand side of the screen for all players.</summary>
  * <param name="killer">The ID of the killer (can be <b><c>INVALID_PLAYER_ID</c></b>)</param>
  * <param name="killee">The ID of the player that died</param>
- * <param name="weapon">The <a href="http://wiki.sa-mp.com/wiki/Weapons">reason</a> (not always a weapon)
+ * <param name="weapon">The <a href="https://www.open.mp/docs/scripting/resources/weaponids">reason</a> (not always a weapon)
  * for the victim's death.  Special icons can also be used (<b><c>ICON_CONNECT</c></b> and <b><c>ICON_DISCONNECT</c></b>)</param>
  * <seealso name="SendDeathMessageToPlayer" />
  * <seealso name="OnPlayerDeath" />
@@ -517,25 +736,13 @@ native GetAnimationName(index, animationLibrary[], len1 = sizeof (animationLibra
  * <returns>This function always returns <b><c>1</c></b>, even when the explosion type and/or radius
  * values are invalid.</returns>
  */
-native void:CreateExplosion(Float:x, Float:y, Float:z, type, Float:radius);
+native bool:CreateExplosion(Float:x, Float:y, Float:z, type, Float:radius);
 
 /*
-                                                                
-    88b           d88                       88                      
-    888b         d888                ,d     88                      
-    88`8b       d8'88                88     88                      
-    88 `8b     d8' 88  ,adPPYYba,  MM88MMM  88,dPPYba,   ,adPPYba,  
-    88  `8b   d8'  88  ""     `Y8    88     88P'    "8a  I8[    ""  
-    88   `8b d8'   88  ,adPPPPP88    88     88       88   `"Y8ba,   
-    88    `888'    88  88,    ,88    88,    88       88  aa    ]8I  
-    88     `8'     88  `"8bbdP"Y8    "Y888  88       88  `"YbbdP"'  
-                                                                    
-                                                                
-
-*/
-
-/*
-native #Maths();
+native # Maths();
+native             Maths(
+native      ====================(
+native
 */
 
 /**
@@ -562,12 +769,30 @@ native Float:asin(Float:value);
 
 /**
  * <library>omp_core</library>
+ * <summary>Get the inversed value of a sine in degrees.</summary>
+ * <param name="value">The sine for which to find the angle for</param>
+ * <seealso name="floatsin" />
+ * <returns>The angle in degrees.</returns>
+ */
+native Float:ASin(Float:value) = asin;
+
+/**
+ * <library>omp_core</library>
  * <summary>Get the inversed value of a cosine in degrees.</summary>
  * <param name="value">The cosine for which to find the angle for</param>
  * <seealso name="floatcos" />
  * <returns>The angle in degrees.</returns>
  */
 native Float:acos(Float:value);
+
+/**
+ * <library>omp_core</library>
+ * <summary>Get the inversed value of a cosine in degrees.</summary>
+ * <param name="value">The cosine for which to find the angle for</param>
+ * <seealso name="floatcos" />
+ * <returns>The angle in degrees.</returns>
+ */
+native Float:ACos(Float:value) = acos;
 
 /**
  * <library>omp_core</library>
@@ -581,6 +806,16 @@ native Float:atan(Float:value);
 
 /**
  * <library>omp_core</library>
+ * <summary>Get the inversed value of a tangent in degrees.</summary>
+ * <param name="value">The tangent for which to find the angle for</param>
+ * <seealso name="atan2" />
+ * <seealso name="floattan" />
+ * <returns>The angle in degrees.</returns>
+ */
+native Float:ATan(Float:value) = atan;
+
+/**
+ * <library>omp_core</library>
  * <summary>Get the multi-valued inversed value of a tangent in degrees.</summary>
  * <param name="y">y size</param>
  * <param name="x">x size</param>
@@ -590,23 +825,22 @@ native Float:atan(Float:value);
  */
 native Float:atan2(Float:y, Float:x);
 
-/*
-                                                                                                                                               
-     ad88888ba                                                                     ,ad8888ba,                               ad88  88               
-    d8"     "8b                                                                   d8"'    `"8b                             d8"    ""               
-    Y8,                                                                          d8'                                       88                      
-    `Y8aaaaa,     ,adPPYba,  8b,dPPYba,  8b       d8   ,adPPYba,  8b,dPPYba,     88              ,adPPYba,   8b,dPPYba,  MM88MMM  88   ,adPPYb,d8  
-      `"""""8b,  a8P_____88  88P'   "Y8  `8b     d8'  a8P_____88  88P'   "Y8     88             a8"     "8a  88P'   `"8a   88     88  a8"    `Y88  
-            `8b  8PP"""""""  88           `8b   d8'   8PP"""""""  88             Y8,            8b       d8  88       88   88     88  8b       88  
-    Y8a     a8P  "8b,   ,aa  88            `8b,d8'    "8b,   ,aa  88              Y8a.    .a8P  "8a,   ,a8"  88       88   88     88  "8a,   ,d88  
-     "Y88888P"    `"Ybbd8"'  88              "8"       `"Ybbd8"'  88               `"Y8888Y"'    `"YbbdP"'   88       88   88     88   `"YbbdP"Y8  
-                                                                                                                                       aa,    ,88  
-                                                                                                                                        "Y8bbdP"   
-
-*/
+/**
+ * <library>omp_core</library>
+ * <summary>Get the multi-valued inversed value of a tangent in degrees.</summary>
+ * <param name="y">y size</param>
+ * <param name="x">x size</param>
+ * <seealso name="atan" />
+ * <seealso name="floattan" />
+ * <returns>The angle in degrees.</returns>
+ */
+native Float:ATan2(Float:y, Float:x) = atan2;
 
 /*
-native #Server Config();
+native # Server Config();
+native         Server Config(
+native      ====================(
+native
 */
 
 /**
@@ -648,7 +882,7 @@ native GetMaxPlayers();
  * <library>omp_core</library>
  * <param name="seconds">The delay between loading main scripts, in seconds.</param>
  */
-native SetModeRestartTime(Float:seconds);
+native bool:SetModeRestartTime(Float:seconds);
 
 /**
  * <library>omp_core</library>
@@ -755,33 +989,11 @@ native bool:RemoveServerRule(const rule[]);
  */
 native bool:IsValidServerRule(const rule[]);
 
-/**
- * <library>omp_core</library>
- */
-forward bool:SetServerRuleFlags(const rule[], E_SERVER_RULE_FLAGS:flags);
-
-/**
- * <library>omp_core</library>
- */
-forward E_SERVER_RULE_FLAGS:GetServerRuleFlags(const rule[]);
-
 /*
-                                                                                                                             
-      ,ad8888ba,   88  88                                        ,ad8888ba,                               ad88  88               
-     d8"'    `"8b  88  ""                            ,d         d8"'    `"8b                             d8"    ""               
-    d8'            88                                88        d8'                                       88                      
-    88             88  88   ,adPPYba,  8b,dPPYba,  MM88MMM     88              ,adPPYba,   8b,dPPYba,  MM88MMM  88   ,adPPYb,d8  
-    88             88  88  a8P_____88  88P'   `"8a   88        88             a8"     "8a  88P'   `"8a   88     88  a8"    `Y88  
-    Y8,            88  88  8PP"""""""  88       88   88        Y8,            8b       d8  88       88   88     88  8b       88  
-     Y8a.    .a8P  88  88  "8b,   ,aa  88       88   88,        Y8a.    .a8P  "8a,   ,a8"  88       88   88     88  "8a,   ,d88  
-      `"Y8888Y"'   88  88   `"Ybbd8"'  88       88   "Y888       `"Y8888Y"'    `"YbbdP"'   88       88   88     88   `"YbbdP"Y8  
-                                                                                                                     aa,    ,88  
-                                                                                                                      "Y8bbdP"   
-
-*/
-
-/*
-native #Client Config();
+native # Client Config();
+native         Client Config(
+native      ====================(
+native
 */
 
 /**
@@ -795,7 +1007,7 @@ native #Client Config();
  * to use it in OnGameModeInit).  It will not remove a connected player's markers.</remarks>
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  */
-native DisableInteriorEnterExits();
+native void:DisableInteriorEnterExits();
 
 /**
  * <library>omp_core</library>
@@ -804,7 +1016,7 @@ native DisableInteriorEnterExits();
  * <seealso name="ShowPlayerNameTagForPlayer" />
  * <remarks>This can not be reversed until the server restarts.</remarks>
  */
-native DisableNameTagLOS();
+native void:DisableNameTagLOS();
 
 /**
  * <library>omp_core</library>
@@ -817,7 +1029,7 @@ native DisableNameTagLOS();
  * <seealso name="SendPlayerMessageToAll" />
  * <seealso name="OnPlayerText" />
  */
-native LimitGlobalChatRadius(Float:chatRadius);
+native bool:LimitGlobalChatRadius(Float:chatRadius);
 
 /**
  * <library>omp_core</library>
@@ -827,14 +1039,14 @@ native LimitGlobalChatRadius(Float:chatRadius);
  * <seealso name="SetPlayerMarkerForPlayer" />
  * <seealso name="LimitGlobalChatRadius" />
  */
-native LimitPlayerMarkerRadius(Float:markerRadius);
+native bool:LimitPlayerMarkerRadius(Float:markerRadius);
 
 /**
  * <library>omp_core</library>
  * <summary>Set the name of the game mode, which appears in the server browser.</summary>
  * <param name="format">The gamemode name to display.  May be optionally formatted.</param>
  */
-native SetGameModeText(const format[], OPEN_MP_TAGS:...);
+native bool:SetGameModeText(const format[], OPEN_MP_TAGS:...);
 
 /**
  * <library>omp_core</library>
@@ -871,7 +1083,7 @@ native void:SetNameTagDrawDistance(Float:distance);
 /**
  * <library>omp_core</library>
  * <summary>Set the world weather for all players.</summary>
- * <param name="weatherid">The <a href="http://wiki.sa-mp.com/wiki/Weatherid">weather</a> to set</param>
+ * <param name="weatherid">The <a href="https://www.open.mp/docs/scripting/resources/weatherid">weather</a> to set</param>
  * <seealso name="SetPlayerWeather" />
  * <seealso name="SetGravity" />
  * <remarks>If <a href="#TogglePlayerClock">TogglePlayerClock</a> is enabled, weather will slowly change
@@ -937,7 +1149,7 @@ native void:ShowPlayerMarkers(PLAYER_MARKERS_MODE:mode);
  * <remarks>Not using this function causes two-handed weapons (not dual-handed - a single weapon that
  * is held by both hands) to be held in only one hand.</remarks>
  */
-native UsePlayerPedAnims();
+native void:UsePlayerPedAnims();
 
 /**
  * <library>omp_core</library>
@@ -958,7 +1170,7 @@ native GetWorldTime();
 /**
  * <library>omp_core</library>
  */
-native ToggleChatTextReplacement(bool:enable);
+native void:ToggleChatTextReplacement(bool:enable);
 
 /**
  * <library>omp_core</library>
@@ -972,7 +1184,7 @@ native bool:ChatTextReplacementToggled();
  * <param name="enable"><b><c>1</c></b> to enable stunt bonuses or <b><c>0</c></b> to disable them</param>
  * <seealso name="EnableStuntBonusForPlayer" />
  */
-native EnableStuntBonusForAll(bool:enable);
+native void:EnableStuntBonusForAll(bool:enable);
 
 /**
  * <library>omp_core</library>
@@ -1012,17 +1224,17 @@ native bool:AreInteriorWeaponsAllowed();
 
 /**
  * <library>omp_core</library>
- * <summary>Are the animations missing from some versions enabled?</summary>
- * <seealso name="EnableAllAnimations" />
- */
-native bool:AreAllAnimationsEnabled();
-
-/**
- * <library>omp_core</library>
  * <summary>Allow use of the animations missing from some versions.</summary>
  * <seealso name="AreAllAnimationsEnabled" />
  */
 native void:EnableAllAnimations(bool:enable);
+
+/**
+ * <library>omp_core</library>
+ * <summary>Are the animations missing from some versions enabled?</summary>
+ * <seealso name="EnableAllAnimations" />
+ */
+native bool:AreAllAnimationsEnabled();
 
 /**
  * <library>omp_core</library>
@@ -1031,25 +1243,13 @@ native void:EnableAllAnimations(bool:enable);
  * set in the callback <a href="#OnGameModeInit">OnGameModeInit</a>.</summary>
  * <param name="enable">A toggle option for whether or not you'd like zone names on or off</param>
  */
-native EnableZoneNames(bool:enable);
+native void:EnableZoneNames(bool:enable);
 
 /*
-                                                     
-    888b      88  88888888ba     ,ad8888ba,              
-    8888b     88  88      "8b   d8"'    `"8b             
-    88 `8b    88  88      ,8P  d8'                       
-    88  `8b   88  88aaaaaa8P'  88             ,adPPYba,  
-    88   `8b  88  88""""""'    88             I8[    ""  
-    88    `8b 88  88           Y8,             `"Y8ba,   
-    88     `8888  88            Y8a.    .a8P  aa    ]8I  
-    88      `888  88             `"Y8888Y"'   `"YbbdP"'  
-                                                     
-                                                     
-
-*/
-
-/*
-native #NPCs();
+native # NPCs();
+native              NPCs(
+native      ====================(
+native
 */
 
 /**
@@ -1068,55 +1268,24 @@ native #NPCs();
 native ConnectNPC(const name[], const script[]);
 
 /*
-                                                                                                                         
-    88888888ba,                                                                                                          88  
-    88      `"8b                                                                              ,d                         88  
-    88        `8b                                                                             88                         88  
-    88         88   ,adPPYba,  8b,dPPYba,   8b,dPPYba,   ,adPPYba,   ,adPPYba,  ,adPPYYba,  MM88MMM  ,adPPYba,   ,adPPYb,88  
-    88         88  a8P_____88  88P'    "8a  88P'   "Y8  a8P_____88  a8"     ""  ""     `Y8    88    a8P_____88  a8"    `Y88  
-    88         8P  8PP"""""""  88       d8  88          8PP"""""""  8b          ,adPPPPP88    88    8PP"""""""  8b       88  
-    88      .a8P   "8b,   ,aa  88b,   ,a8"  88          "8b,   ,aa  "8a,   ,aa  88,    ,88    88,   "8b,   ,aa  "8a,   ,d88  
-    88888888Y"'     `"Ybbd8"'  88`YbbdP"'   88           `"Ybbd8"'   `"Ybbd8"'  `"8bbdP"Y8    "Y888  `"Ybbd8"'   `"8bbdP"Y8  
-                               88                                                                                            
-                               88                                                                                            
+native # Deprecated();
+native           Deprecated(
+native      ====================(
+native
+*/
 
+// These three functions are like this for qawno.
+/*
+native GetPlayerPoolSize();
 */
 
 /*
-native #Deprecated();
+native GetVehiclePoolSize();
 */
 
-/**
- * <library>omp_core</library>
- * <summary>Gets the highest playerid currently in use on the server.</summary>
- * <seealso name="GetVehiclePoolSize" />
- * <seealso name="GetMaxPlayers" />
- * <returns>The highest playerid currently in use on the server or <b><c>0</c></b> if there are no connected
- * players.</returns>
- */
-#pragma deprecated This function is fundamentally broken.  See: open.mp/docs/scripting/functions/GetPlayerPoolSize
-native GetPlayerPoolSize();
-
-/**
- * <library>omp_core</library>
- * <summary>Gets the highest vehicleid currently in use on the server.</summary>
- * <seealso name="GetPlayerPoolSize" />
- * <returns>The highest vehicleid currently in use on the server or <b><c>0</c></b> if there are no
- * created vehicles.</returns>
- */
-#pragma deprecated This function is fundamentally broken.  See: open.mp/docs/scripting/functions/GetVehiclePoolSize
-native GetVehiclePoolSize();
-
-/**
- * <library>omp_core</library>
- * <summary>Gets the highest actorid created on the server.</summary>
- * <seealso name="CreateActor" />
- * <seealso name="IsValidActor" />
- * <seealso name="SetActorHealth" />
- * <returns>The highest actorid created on the server or <b><c>0</c></b> if there are no created actors.</returns>
- */
-#pragma deprecated This function is fundamentally broken.  See: open.mp/docs/scripting/functions/GetActorPoolSize
+/*
 native GetActorPoolSize();
+*/
 
 /**
  * <library>omp_core</library>
@@ -1127,19 +1296,6 @@ native GetActorPoolSize();
  */
 #pragma deprecated Use `OnVehicleDamageStatusUpdate`.
 forward void:EnableTirePopping(bool:enable);
-
-/**
- * <library>omp_core</library>
- * <summary>Shows 'game text' (on-screen text) for a certain length of time for all players.</summary>
- * <param name="format">The text to be displayed or formatted</param>
- * <param name="time">The duration of the text being shown in milliseconds</param>
- * <param name="style">The style of text to be displayed</param>
- * <seealso name="GameTextForPlayer" />
- * <seealso name="TextDrawShowForAll" />
- * <returns>This function always returns <b><c>1</c></b>.</returns>
- */
-#pragma deprecated Use `GameTextForAll`.
-native void:GameTextForAllf(const format[], time, style, OPEN_MP_TAGS:...) = GameTextForAll;
 
 /**
  * <library>omp_core</library>
@@ -1210,22 +1366,7 @@ native bool:GetServerVarAsBool(const cvar[]) = GetConsoleVarAsBool;
 
 /**
  * <library>omp_core</library>
- * <summary>Sends a message in the name of a player to all other players on the server.  The line will
- * start with the sender's name in their colour, followed by the message in white.</summary>
- * <param name="senderid">The ID of the sender.  If invalid, the message will not be sent</param>
- * <param name="format">The message that will be sent.  May be optionally formatted.</param>
- * <seealso name="SendPlayerMessageToPlayer" />
- * <seealso name="SendClientMessageToAll" />
- * <seealso name="OnPlayerText" />
- * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
- *  It will result in crashes otherwise.</remarks>
- */
-#pragma deprecated Use `SendPlayerMessageToAll`.
-native bool:SendPlayerMessageToAllf(senderid, const format[], OPEN_MP_TAGS:...) = SendPlayerMessageToAll;
-
-/**
- * <library>omp_core</library>
- * <summary>This function does not work in the current SA:MP version! </summary>
+ * <summary>This function does not work in the current SA:MP version!/</summary>
  * <seealso name="CreatePickup" />
  * <seealso name="GivePlayerMoney" />
  * <seealso name="OnPlayerDeath" />
@@ -1247,18 +1388,22 @@ forward void:SetDeathDropAmount(amount);
  *  It is to be stored alongside the actual hash in the player's account. </remarks>
  * <remarks>The result is 64 charaters long, so the output array must be at least 65 cells big.</remarks>
  */
-#pragma deprecated Use BCrypt for hashing passwords.
+#pragma deprecated Use BCrypt for hashing passwords. For other purposes use SHA256_Hash
 native SHA256_PassHash(const password[], const salt[], output[], size = sizeof (output));
 
 /**
  * <library>omp_core</library>
- * <summary>Currently removed/</summary>
- * <seealso name="CreatePickup" />
- * <seealso name="GivePlayerMoney" />
- * <seealso name="OnPlayerDeath" />
+ * <summary>Hashes a string using the SHA-256 hashing algorithm.  Includes a salt.  The output is
+ * always 256 bytes in length, or the equivalent of 64 Pawn cells.</summary>
+ * <param name="content">The string content to hash</param>
+ * <param name="salt">The salt to use in the hash</param>
+ * <param name="output">The returned hash</param>
+ * <param name="size">The returned hash maximum length</param>
+ * <remarks>The salt is appended to the end of the string content, meaning string 'foo' and salt 'bar' would
+ * form 'foobar'. </remarks>
+ * <remarks>The result is 64 charaters long, so the output array must be at least 65 cells big.</remarks>
  */
-#pragma deprecated Use `CreatePickup`
-native void:SetDeathDropAmount(amount);
+native SHA256_Hash(const content[], const salt[], output[], size = sizeof (output)) = SHA256_PassHash;
 
 /**
  * <library>omp_core</library>
@@ -1340,3 +1485,22 @@ forward OnFilterScriptInit();
  */
 forward OnFilterScriptExit();
 
+/**
+ * <summary>This callback is called for each connected player when a script is loaded.</summary>
+ * <seealso name="OnFilterScriptInit" />
+ * <seealso name="OnFilterScriptExit" />
+ * <seealso name="OnGameModeInit" />
+ * <seealso name="OnGameModeExit" />
+ * <returns>This callback does not handle returns.</returns>
+ */
+forward OnScriptLoadPlayer(playerid, bool:isEntryScript);
+
+/**
+ * <summary>This callback is called for each connected player when a script is unloaded.</summary>
+ * <seealso name="OnFilterScriptInit" />
+ * <seealso name="OnFilterScriptExit" />
+ * <seealso name="OnGameModeInit" />
+ * <seealso name="OnGameModeExit" />
+ * <returns>This callback does not handle returns.</returns>
+ */
+forward OnScriptUnloadPlayer(playerid, bool:isEntryScript);

@@ -4,12 +4,12 @@
 #define _INC_omp_player
 
 /**
- * <library name="omp_variable" summary="open.mp player functions.">
+ * <library name="omp_player" summary="open.mp player functions.">
  *   <license>
  *     This Source Code Form is subject to the terms of the Mozilla Public License,
  *     v. 2.0. If a copy of the MPL was not distributed with this file, You can
  *     obtain one at http://mozilla.org/MPL/2.0/.
- *    
+ *
  *     The original code is copyright (c) 2023, open.mp team and contributors.
  *   </license>
  *   <summary pawndoc="true">
@@ -105,6 +105,7 @@ const INVALID_PLAYER_ID                        = 0xFFFF;
 #define PLAYER_STATE: __TAG(PLAYER_STATE):
 enum PLAYER_STATE:__PLAYER_STATE
 {
+	UNKNOWN_PLAYER_STATE                       = -1,
 	PLAYER_STATE_NONE,
 	PLAYER_STATE_ONFOOT,
 	PLAYER_STATE_DRIVER,
@@ -115,21 +116,50 @@ enum PLAYER_STATE:__PLAYER_STATE
 }
 static stock PLAYER_STATE:_@PLAYER_STATE() { return __PLAYER_STATE; }
 
-/**
- * <library>omp_player</library>
- * <summary>Used internally</summary>
- */
-#pragma deprecated Used internally.
-const PLAYER_STATE:PLAYER_STATE_EXIT_VEH       = PLAYER_STATE:4;
-#define PLAYER_STATE_EXIT_VEHICLE              PLAYER_STATE_EXIT_VEH
+#define UNKNOWN_PLAYER_STATE                   (PLAYER_STATE:-1)
+#define PLAYER_STATE_NONE                      (PLAYER_STATE:0)
+#define PLAYER_STATE_ONFOOT                    (PLAYER_STATE:1)
+#define PLAYER_STATE_DRIVER                    (PLAYER_STATE:2)
+#define PLAYER_STATE_PASSENGER                 (PLAYER_STATE:3)
+#define PLAYER_STATE_WASTED                    (PLAYER_STATE:7)
+#define PLAYER_STATE_SPAWNED                   (PLAYER_STATE:8)
+#define PLAYER_STATE_SPECTATING                (PLAYER_STATE:9)
 
 /**
  * <library>omp_player</library>
  * <summary>Used internally</summary>
  */
 #pragma deprecated Used internally.
-const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_DRV = PLAYER_STATE:5;
-#define PLAYER_STATE_ENTER_VEHICLE_DRIVER      PLAYER_STATE_ENTER_VEHICLE_DRV
+const PLAYER_STATE:PLAYER_STATE_EXIT_VEH       = PLAYER_STATE:4;
+#define PLAYER_STATE_EXIT_VEH                  (PLAYER_STATE:4)
+
+/**
+ * <library>omp_player</library>
+ * <summary>Used internally</summary>
+ */
+#pragma deprecated Used internally.
+const PLAYER_STATE:PLAYER_STATE_EXIT_VEHICLE   = PLAYER_STATE:4;
+#define PLAYER_STATE_EXIT_VEHICLE              (PLAYER_STATE:4)
+
+/**
+ * <library>omp_player</library>
+ * <summary>Used internally</summary>
+ */
+#pragma deprecated Used internally.
+const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_DRV  = PLAYER_STATE:5;
+#define PLAYER_STATE_ENTER_VEHICLE_DRV         (PLAYER_STATE:5)
+
+/**
+ * <library>omp_player</library>
+ * <summary>Used internally</summary>
+ */
+#pragma deprecated Used internally.
+#if __namemax > 31
+	const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_DRIVER = PLAYER_STATE:5;
+#else
+	const __PLAYER_STATE_ENTER_VD = 0;
+#endif
+#define PLAYER_STATE_ENTER_VEHICLE_DRIVER      (PLAYER_STATE:5)
 
 /**
  * <library>omp_player</library>
@@ -137,7 +167,19 @@ const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_DRV = PLAYER_STATE:5;
  */
 #pragma deprecated Used internally.
 const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_PASS = PLAYER_STATE:6;
-#define PLAYER_STATE_ENTER_VEHICLE_PASSENGER   PLAYER_STATE_ENTER_VEHICLE_PASS
+#define PLAYER_STATE_ENTER_VEHICLE_PASS        (PLAYER_STATE:6)
+
+/**
+ * <library>omp_player</library>
+ * <summary>Used internally</summary>
+ */
+#pragma deprecated Used internally.
+#if __namemax > 31
+	const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_PASSENGER = PLAYER_STATE:6;
+#else
+	const __PLAYER_STATE_ENTER_VP = 0;
+#endif
+#define PLAYER_STATE_ENTER_VEHICLE_PASSENGER   (PLAYER_STATE:6)
 
 /// <p/>
 /**
@@ -146,6 +188,7 @@ const PLAYER_STATE:PLAYER_STATE_ENTER_VEHICLE_PASS = PLAYER_STATE:6;
 #define SPECIAL_ACTION: __TAG(SPECIAL_ACTION):
 enum SPECIAL_ACTION:__SPECIAL_ACTION
 {
+	UNKNOWN_SPECIAL_ACTION                     = -1,
 	SPECIAL_ACTION_NONE,
 	SPECIAL_ACTION_DUCK,
 	SPECIAL_ACTION_USEJETPACK,
@@ -169,13 +212,36 @@ enum SPECIAL_ACTION:__SPECIAL_ACTION
 }
 static stock SPECIAL_ACTION:_@SPECIAL_ACTION() { return __SPECIAL_ACTION; }
 
+#define UNKNOWN_SPECIAL_ACTION                 (SPECIAL_ACTION:-1)
+#define SPECIAL_ACTION_NONE                    (SPECIAL_ACTION:0)
+#define SPECIAL_ACTION_DUCK                    (SPECIAL_ACTION:1)
+#define SPECIAL_ACTION_USEJETPACK              (SPECIAL_ACTION:2)
+#define SPECIAL_ACTION_ENTER_VEHICLE           (SPECIAL_ACTION:3)
+#define SPECIAL_ACTION_EXIT_VEHICLE            (SPECIAL_ACTION:4)
+#define SPECIAL_ACTION_DANCE1                  (SPECIAL_ACTION:5)
+#define SPECIAL_ACTION_DANCE2                  (SPECIAL_ACTION:6)
+#define SPECIAL_ACTION_DANCE3                  (SPECIAL_ACTION:7)
+#define SPECIAL_ACTION_DANCE4                  (SPECIAL_ACTION:8)
+#define SPECIAL_ACTION_HANDSUP                 (SPECIAL_ACTION:10)
+#define SPECIAL_ACTION_USECELLPHONE            (SPECIAL_ACTION:11)
+#define SPECIAL_ACTION_SITTING                 (SPECIAL_ACTION:12)
+#define SPECIAL_ACTION_STOPUSECELLPHONE        (SPECIAL_ACTION:13)
+#define SPECIAL_ACTION_DRINK_BEER              (SPECIAL_ACTION:20)
+#define SPECIAL_ACTION_SMOKE_CIGGY             (SPECIAL_ACTION:21)
+#define SPECIAL_ACTION_DRINK_WINE              (SPECIAL_ACTION:22)
+#define SPECIAL_ACTION_DRINK_SPRUNK            (SPECIAL_ACTION:23)
+#define SPECIAL_ACTION_CUFFED                  (SPECIAL_ACTION:24)
+#define SPECIAL_ACTION_CARRY                   (SPECIAL_ACTION:25)
+#define SPECIAL_ACTION_PISSING                 (SPECIAL_ACTION:68)
+
 /// <p/>
 /**
  * <library>omp_player</library>
  */
 #define FIGHT_STYLE: __TAG(FIGHT_STYLE):
-enum FIGHT_STYLE:__FIGHT_STYLE
+enum FIGHT_STYLE:MAX_FIGHT_STYLES
 {
+	UNKNOWN_FIGHT_STYLE                        = -1,
 	FIGHT_STYLE_NORMAL                         = 4,
 	FIGHT_STYLE_BOXING,
 	FIGHT_STYLE_KUNGFU,
@@ -183,17 +249,24 @@ enum FIGHT_STYLE:__FIGHT_STYLE
 	FIGHT_STYLE_GRABKICK                       = 15,
 	FIGHT_STYLE_ELBOW
 }
-static stock FIGHT_STYLE:_@FIGHT_STYLE() { return __FIGHT_STYLE; }
+static stock FIGHT_STYLE:_@FIGHT_STYLE() { return MAX_FIGHT_STYLES; }
 
-#define MAX_FIGHT_STYLES __FIGHT_STYLE
+#define UNKNOWN_FIGHT_STYLE                    (FIGHT_STYLE:-1)
+#define FIGHT_STYLE_NORMAL                     (FIGHT_STYLE:4)
+#define FIGHT_STYLE_BOXING                     (FIGHT_STYLE:5)
+#define FIGHT_STYLE_KUNGFU                     (FIGHT_STYLE:6)
+#define FIGHT_STYLE_KNEEHEAD                   (FIGHT_STYLE:7)
+#define FIGHT_STYLE_GRABKICK                   (FIGHT_STYLE:15)
+#define FIGHT_STYLE_ELBOW                      (FIGHT_STYLE:16)
 
 /// <p/>
 /**
  * <library>omp_player</library>
  */
 #define WEAPONSKILL: __TAG(WEAPONSKILL):
-enum WEAPONSKILL:__WEAPONSKILL
+enum WEAPONSKILL:MAX_WEAPONSKILLS
 {
+	UNKNOWN_WEAPONSKILL                        = -1,
 	WEAPONSKILL_PISTOL,
 	WEAPONSKILL_PISTOL_SILENCED,
 	WEAPONSKILL_DESERT_EAGLE,
@@ -206,9 +279,20 @@ enum WEAPONSKILL:__WEAPONSKILL
 	WEAPONSKILL_M4,
 	WEAPONSKILL_SNIPERRIFLE
 }
-static stock WEAPONSKILL:_@WEAPONSKILL() { return __WEAPONSKILL; }
+static stock WEAPONSKILL:_@WEAPONSKILL() { return MAX_WEAPONSKILLS; }
 
-#define MAX_WEAPONSKILLS __WEAPONSKILL
+#define UNKNOWN_WEAPONSKILL                    (WEAPONSKILL:-1)
+#define WEAPONSKILL_PISTOL                     (WEAPONSKILL:0)
+#define WEAPONSKILL_PISTOL_SILENCED            (WEAPONSKILL:1)
+#define WEAPONSKILL_DESERT_EAGLE               (WEAPONSKILL:2)
+#define WEAPONSKILL_SHOTGUN                    (WEAPONSKILL:3)
+#define WEAPONSKILL_SAWNOFF_SHOTGUN            (WEAPONSKILL:4)
+#define WEAPONSKILL_SPAS12_SHOTGUN             (WEAPONSKILL:5)
+#define WEAPONSKILL_MICRO_UZI                  (WEAPONSKILL:6)
+#define WEAPONSKILL_MP5                        (WEAPONSKILL:7)
+#define WEAPONSKILL_AK47                       (WEAPONSKILL:8)
+#define WEAPONSKILL_M4                         (WEAPONSKILL:9)
+#define WEAPONSKILL_SNIPERRIFLE                (WEAPONSKILL:10)
 
 /// <p/>
 /**
@@ -217,13 +301,22 @@ static stock WEAPONSKILL:_@WEAPONSKILL() { return __WEAPONSKILL; }
 #define WEAPONSTATE: __TAG(WEAPONSTATE):
 enum WEAPONSTATE:__WEAPONSTATE
 {
-	WEAPONSTATE_UNKNOWN                        = -1,
+	UNKNOWN_WEAPONSTATE                        = -1,
+	WEAPONSTATE_UNKNOWN                        = UNKNOWN_WEAPONSTATE,
 	WEAPONSTATE_NO_BULLETS,
 	WEAPONSTATE_LAST_BULLET,
 	WEAPONSTATE_MORE_BULLETS,
 	WEAPONSTATE_RELOADING
 }
 static stock WEAPONSTATE:_@WEAPONSTATE() { return __WEAPONSTATE; }
+
+#define UNKNOWN_WEAPONSTATE                    (WEAPONSTATE:-1)
+#define WEAPONSTATE_NO_BULLETS                 (WEAPONSTATE:0)
+#define WEAPONSTATE_LAST_BULLET                (WEAPONSTATE:1)
+#define WEAPONSTATE_MORE_BULLETS               (WEAPONSTATE:2)
+#define WEAPONSTATE_RELOADING                  (WEAPONSTATE:3)
+
+#define WEAPONSTATE_UNKNOWN UNKNOWN_WEAPONSTATE
 
 /// <p/>
 /**
@@ -233,6 +326,8 @@ static stock WEAPONSTATE:_@WEAPONSTATE() { return __WEAPONSTATE; }
 #define KEY: __TAG(KEY):
 enum KEY:__KEY (<<= 1)
 {
+	UNKNOWN_KEY                                = -1,
+	KEY_NONE                                   = 0,
 	KEY_ACTION                                 = 1,
 	KEY_CROUCH,
 	KEY_FIRE,
@@ -241,6 +336,7 @@ enum KEY:__KEY (<<= 1)
 	KEY_JUMP,
 	KEY_LOOK_RIGHT,
 	KEY_HANDBRAKE,
+	KEY_AIM                                    = KEY_HANDBRAKE,
 	KEY_LOOK_LEFT,
 	KEY_SUBMISSION,
 	KEY_LOOK_BEHIND                            = KEY_SUBMISSION,
@@ -260,6 +356,35 @@ enum KEY:__KEY (<<= 1)
 }
 static stock KEY:_@KEY() { return __KEY; }
 
+#define UNKNOWN_KEY                            (KEY:-1)
+#define KEY_NONE                               (KEY:0x00000000)
+#define KEY_ACTION                             (KEY:0x00000001)
+#define KEY_CROUCH                             (KEY:0x00000002)
+#define KEY_FIRE                               (KEY:0x00000004)
+#define KEY_SPRINT                             (KEY:0x00000008)
+#define KEY_SECONDARY_ATTACK                   (KEY:0x00000010)
+#define KEY_JUMP                               (KEY:0x00000020)
+#define KEY_LOOK_RIGHT                         (KEY:0x00000040)
+#define KEY_HANDBRAKE                          (KEY:0x00000080)
+#define KEY_AIM                                (KEY:0x00000080)
+#define KEY_LOOK_LEFT                          (KEY:0x00000100)
+#define KEY_SUBMISSION                         (KEY:0x00000200)
+#define KEY_LOOK_BEHIND                        (KEY:0x00000200)
+#define KEY_WALK                               (KEY:0x00000400)
+#define KEY_ANALOG_UP                          (KEY:0x00000800)
+#define KEY_ANALOG_DOWN                        (KEY:0x00001000)
+#define KEY_ANALOG_LEFT                        (KEY:0x00002000)
+#define KEY_ANALOG_RIGHT                       (KEY:0x00004000)
+#define KEY_YES                                (KEY:0x00010000)
+#define KEY_NO                                 (KEY:0x00020000)
+#define KEY_CTRL_BACK                          (KEY:0x00040000)
+
+// Untagged.
+#define KEY_UP                                 (-128)
+#define KEY_DOWN                               (128)
+#define KEY_LEFT                               (-128)
+#define KEY_RIGHT                              (128)
+
 /// <p/>
 /**
  * <library>omp_player</library>
@@ -267,10 +392,15 @@ static stock KEY:_@KEY() { return __KEY; }
 #define CAM_MOVE: __TAG(CAM_MOVE):
 enum CAM_MOVE:__CAMERA
 {
+	UNKNOWN_CAM_MOVE                           = -1,
 	CAMERA_MOVE                                = 1,
 	CAMERA_CUT
 }
 static stock CAMERA_MOVE:_@CAMERA_MOVE() { return __CAMERA_MOVE; }
+
+#define UNKNOWN_CAM_MOVE                       (CAM_MOVE:-1)
+#define CAMERA_MOVE                            (CAM_MOVE:1)
+#define CAMERA_CUT                             (CAM_MOVE:2)
 
 /// <p/>
 /**
@@ -279,6 +409,7 @@ static stock CAMERA_MOVE:_@CAMERA_MOVE() { return __CAMERA_MOVE; }
 #define CAM_MODE: __TAG(CAM_MODE):
 enum CAM_MODE:__CAM_MODE
 {
+	UNKNOWN_CAM_MODE                           = -1,
 	CAM_MODE_DISCONNECTED                      = -1,
 	CAM_MODE_NONE                              = 0,
 	CAM_MODE_BEHINDCAR                         = 3,
@@ -297,6 +428,23 @@ enum CAM_MODE:__CAM_MODE
 }
 static stock CAM_MODE:_@CAM_MODE() { return __CAM_MODE; }
 
+#define UNKNOWN_CAM_MODE                       (CAM_MODE:-1)
+#define CAM_MODE_DISCONNECTED                  (CAM_MODE:-1)
+#define CAM_MODE_NONE                          (CAM_MODE:0)
+#define CAM_MODE_BEHINDCAR                     (CAM_MODE:3)
+#define CAM_MODE_FOLLOWPED                     (CAM_MODE:4)
+#define CAM_MODE_SNIPER                        (CAM_MODE:7)
+#define CAM_MODE_ROCKETLAUNCHER                (CAM_MODE:8)
+#define CAM_MODE_FIXED                         (CAM_MODE:15)
+#define CAM_MODE_1STPERSON                     (CAM_MODE:16)
+#define CAM_MODE_CAM_ON_A_STRING               (CAM_MODE:18)
+#define CAM_MODE_BEHINDBOAT                    (CAM_MODE:22)
+#define CAM_MODE_CAMERA                        (CAM_MODE:46)
+#define CAM_MODE_ROCKETLAUNCHER_HS             (CAM_MODE:51)
+#define CAM_MODE_AIMWEAPON                     (CAM_MODE:53)
+#define CAM_MODE_AIMWEAPON_FROMCAR             (CAM_MODE:55)
+#define CAM_MODE_DW_HELI_CHASE                 (CAM_MODE:56)
+
 /// <p/>
 /**
  * <library>omp_player</library>
@@ -304,12 +452,19 @@ static stock CAM_MODE:_@CAM_MODE() { return __CAM_MODE; }
 #define MAPICON: __TAG(MAPICON):
 enum MAPICON:__MAPICON
 {
+	UNKNOWN_MAPICON                            = -1,
 	MAPICON_LOCAL,                             // Displays in the player's local area
 	MAPICON_GLOBAL,                            // Displays always
 	MAPICON_LOCAL_CHECKPOINT,                  // Displays in the player's local area and has a checkpoint marker
 	MAPICON_GLOBAL_CHECKPOINT                  // Displays always and has a checkpoint marker
 }
 static stock MAPICON:_@MAPICON() { return __MAPICON; }
+
+#define UNKNOWN_MAPICON                        (MAPICON:-1)
+#define MAPICON_LOCAL                          (MAPICON:0) // Displays in the player's local area.
+#define MAPICON_GLOBAL                         (MAPICON:1) // Displays always.
+#define MAPICON_LOCAL_CHECKPOINT               (MAPICON:2) // Displays in the player's local area and has a checkpoint marker.
+#define MAPICON_GLOBAL_CHECKPOINT              (MAPICON:3) // Displays always and has a checkpoint marker.
 
 /// <p/>
 /**
@@ -319,11 +474,17 @@ static stock MAPICON:_@MAPICON() { return __MAPICON; }
 #define SPECTATE_MODE: __TAG(SPECTATE_MODE):
 enum SPECTATE_MODE:__SPECTATE_MODE
 {
+	UNKNOWN_SPECTATE_MODE                      = -1,
 	SPECTATE_MODE_NORMAL                       = 1,
 	SPECTATE_MODE_FIXED,
 	SPECTATE_MODE_SIDE
 }
 static stock SPECTATE_MODE:_@SPECTATE_MODE() { return __SPECTATE_MODE; }
+
+#define UNKNOWN_SPECTATE_MODE                  (SPECTATE_MODE:-1)
+#define SPECTATE_MODE_NORMAL                   (SPECTATE_MODE:1)
+#define SPECTATE_MODE_FIXED                    (SPECTATE_MODE:2)
+#define SPECTATE_MODE_SIDE                     (SPECTATE_MODE:3)
 
 /// <p/>
 /**
@@ -333,11 +494,17 @@ static stock SPECTATE_MODE:_@SPECTATE_MODE() { return __SPECTATE_MODE; }
 #define PLAYER_RECORDING_TYPE: __TAG(PLAYER_RECORDING_TYPE):
 enum PLAYER_RECORDING_TYPE:__PLAYER_RECORDING_TYPE
 {
+	UNKNOWN_PLAYER_RECORDING_TYPE              = -1,
 	PLAYER_RECORDING_TYPE_NONE,
 	PLAYER_RECORDING_TYPE_DRIVER,
 	PLAYER_RECORDING_TYPE_ONFOOT
 }
 static stock PLAYER_RECORDING_TYPE:_@PLAYER_RECORDING_TYPE() { return __PLAYER_RECORDING_TYPE; }
+
+#define UNKNOWN_PLAYER_RECORDING_TYPE          (PLAYER_RECORDING_TYPE:-1)
+#define PLAYER_RECORDING_TYPE_NONE             (PLAYER_RECORDING_TYPE:0)
+#define PLAYER_RECORDING_TYPE_DRIVER           (PLAYER_RECORDING_TYPE:1)
+#define PLAYER_RECORDING_TYPE_ONFOOT           (PLAYER_RECORDING_TYPE:2)
 
 /// <p/>
 /**
@@ -346,11 +513,19 @@ static stock PLAYER_RECORDING_TYPE:_@PLAYER_RECORDING_TYPE() { return __PLAYER_R
 #define FORCE_SYNC: __TAG(FORCE_SYNC):
 enum FORCE_SYNC:__FORCE_SYNC
 {
-	SYNC_NONE, // Don't force sync to anyone else.
-	SYNC_ALL,  // Sync to all streamed-in players.
-	SYNC_OTHER // Sync to all streamed-in players, except the player with the animation.
+	UNKNOWN_FORCE_SYNC                         = -1,
+	//REMOVE_FROM_VEHICLES                       = 128, // Remove players from vehicles.
+	SYNC_NONE                                  = 0, // Don't force sync to anyone else.
+	SYNC_ALL,                                  // Sync to all streamed-in players.
+	SYNC_OTHER                                 // Sync to all streamed-in players, except the player with the animation.
 }
 static stock FORCE_SYNC:_@FORCE_SYNC() { return __FORCE_SYNC; }
+
+#define UNKNOWN_FORCE_SYNC                     (FORCE_SYNC:-1)
+//#define REMOVE_FROM_VEHICLES                   (FORCE_SYNC:128) // Remove players from vehicles.
+#define SYNC_NONE                              (FORCE_SYNC:0) // Don't force sync to anyone else.
+#define SYNC_ALL                               (FORCE_SYNC:1) // Sync to all streamed-in players.
+#define SYNC_OTHER                             (FORCE_SYNC:2) // Sync to all streamed-in players, except the player with the animation.
 
 /// <p/>
 /**
@@ -359,9 +534,13 @@ static stock FORCE_SYNC:_@FORCE_SYNC() { return __FORCE_SYNC; }
 #define CLICK_SOURCE: __TAG(CLICK_SOURCE):
 enum CLICK_SOURCE:__CLICK_SOURCE
 {
+	UNKNOWN_CLICK_SOURCE                       = -1,
 	CLICK_SOURCE_SCOREBOARD
 }
 static stock CLICK_SOURCE:_@CLICK_SOURCE() { return __CLICK_SOURCE; }
+
+#define UNKNOWN_CLICK_SOURCE                   (CLICK_SOURCE:-1)
+#define CLICK_SOURCE_SCOREBOARD                (CLICK_SOURCE:0)
 
 /// <p/>
 /**
@@ -370,6 +549,7 @@ static stock CLICK_SOURCE:_@CLICK_SOURCE() { return __CLICK_SOURCE; }
 #define BULLET_HIT_TYPE: __TAG(BULLET_HIT_TYPE):
 enum BULLET_HIT_TYPE:__BULLET_HIT_TYPE
 {
+	UNKNOWN_BULLET_HIT_TYPE                    = -1,
 	BULLET_HIT_TYPE_NONE,
 	BULLET_HIT_TYPE_PLAYER,
 	BULLET_HIT_TYPE_VEHICLE,
@@ -377,6 +557,13 @@ enum BULLET_HIT_TYPE:__BULLET_HIT_TYPE
 	BULLET_HIT_TYPE_PLAYER_OBJECT
 }
 static stock BULLET_HIT_TYPE:_@BULLET_HIT_TYPE() { return __BULLET_HIT_TYPE; }
+
+#define UNKNOWN_BULLET_HIT_TYPE                (BULLET_HIT_TYPE:-1)
+#define BULLET_HIT_TYPE_NONE                   (BULLET_HIT_TYPE:0)
+#define BULLET_HIT_TYPE_PLAYER                 (BULLET_HIT_TYPE:1)
+#define BULLET_HIT_TYPE_VEHICLE                (BULLET_HIT_TYPE:2)
+#define BULLET_HIT_TYPE_OBJECT                 (BULLET_HIT_TYPE:3)
+#define BULLET_HIT_TYPE_PLAYER_OBJECT          (BULLET_HIT_TYPE:4)
 
 /*
                                                                            
@@ -425,7 +612,7 @@ native GetPlayerWantedLevel(playerid);
  * <library>omp_player</library>
  * <summary>Set a player's weather.</summary>
  * <param name="playerid">The ID of the player whose weather to set</param>
- * <param name="weather">The <a href="http://wiki.sa-mp.com/wiki/Weatherid">weather</a> to set</param>
+ * <param name="weather">The <a href="https://www.open.mp/docs/scripting/resources/weatherid">weather</a> to set</param>
  * <seealso name="SetWeather" />
  * <seealso name="SetGravity" />
  * <remarks>If <a href="#TogglePlayerClock">TogglePlayerClock</a> is enabled, weather will slowly change
@@ -498,7 +685,8 @@ native bool:StopAudioStreamForPlayer(playerid);
 /**
  * <library>omp_player</library>
  * <summary>Creates an explosion that is only visible to a single player.  This can be used to isolate
- * explosions from other players or to make them only appear in specific <a href="http://wiki.sa-mp.com/wiki/SetPlayerVirtualWorld">virtual
+ * explosions from other players or to make them only appear in specific
+ * <a href="https://www.open.mp/docs/scripting/functions/SetPlayerVirtualWorld">virtual
  * worlds</a>.</summary>
  * <param name="playerid">The ID of the player to create the explosion for</param>
  * <param name="x">The x coordinate of the explosion</param>
@@ -552,6 +740,19 @@ native bool:GetPlayerTime(playerid, &hour, &minute);
 
 /**
  * <library>omp_player</library>
+ * <summary>Checks whether this player has their in-game clock enabled.</summary>
+ * <param name="playerid">The player whose clock you want to check</param>
+ * <remarks>Time is not synced with other players! Time can be synced using <a href="#SetPlayerTime">SetPlayerTime</a>.</remarks>
+ * <remarks>Time will automatically advance 6 hours when the player dies.</remarks>
+ * <returns>
+ *   <b><c>1</c></b>: The clock is enabled.<br />
+ *   <b><c>0</c></b>: The clock isn't enabled, or the specified player does not exist.
+ * </returns>
+ */
+native bool:PlayerHasClockEnabled(playerid);
+
+/**
+ * <library>omp_player</library>
  * <summary>Toggle the in-game clock (top-right corner) for a specific player.  When this is enabled,
  * time will progress at 1 minute per second.  Weather will also interpolate (slowly change over time)
  * when set using <a href="#SetWeather">SetWeather</a>/<a href="#SetPlayerWeather">SetPlayerWeather</a>.</summary>
@@ -571,20 +772,20 @@ native bool:TogglePlayerClock(playerid, bool:toggle);
  * <summary>Plays the specified sound for a player.</summary>
  * <param name="playerid">The ID of the player for whom to play the sound</param>
  * <param name="soundid">The sound to play</param>
- * <param name="x">x coordinate for the sound to play at. (0 for no position)</param>
- * <param name="y">y coordinate for the sound to play at. (0 for no position)</param>
- * <param name="z">z coordinate for the sound to play at. (0 for no position)</param>
+ * <param name="x">x coordinate for the sound to play at. (<b><c>optional=0.0</c></b>)</param>
+ * <param name="y">y coordinate for the sound to play at. (<b><c>optional=0.0</c></b>)</param>
+ * <param name="z">z coordinate for the sound to play at. (<b><c>optional=0.0</c></b>)</param>
  * <seealso name="PlayCrimeReportForPlayer" />
  * <seealso name="PlayAudioStreamForPlayer" />
  * <seealso name="StopAudioStreamForPlayer" />
- * <remarks>Only use the coordinates if you want the sound to be played at a certain position.  Set
- * coordinates all to 0 to just play the sound.</remarks>
+ * <remarks>Only use the coordinates if you want the sound to be played at a certain position. By
+ * default, the sound will be played with no position at a certain position.</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
  *   <b><c>0</c></b>: The function failed to execute.  This means the player is not connected.
  * </returns>
  */
-native bool:PlayerPlaySound(playerid, soundid, Float:x, Float:y, Float:z);
+native bool:PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0);
 
 /**
  * <library>omp_player</library>
@@ -827,9 +1028,9 @@ native GetPlayerDrunkLevel(playerid);
 /**
  * <library>omp_player</library>
  * <summary>Set a player's interior.  A list of currently known interiors and their positions can be
- * found <a href="http://wiki.sa-mp.com/wiki/Interiorids">here</a>.</summary>
+ * found <a href="https://www.open.mp/docs/scripting/resources/interiorids">here</a>.</summary>
  * <param name="playerid">The ID of the player to set the interior of</param>
- * <param name="interiorid">The <a href="http://wiki.sa-mp.com/wiki/Interiorids">interior ID</a> to
+ * <param name="interiorid">The <a href="https://www.open.mp/docs/scripting/resources/interiorids">interior ID</a> to
  * set the player in</param>
  * <seealso name="GetPlayerInterior" />
  * <seealso name="LinkVehicleToInterior" />
@@ -845,7 +1046,7 @@ native bool:SetPlayerInterior(playerid, interiorid);
  * <library>omp_player</library>
  * <summary>Set the skin of a player.  A player's skin is their character model.</summary>
  * <param name="playerid">The ID of the player to set the skin of</param>
- * <param name="skinid">The <a href="http://wiki.sa-mp.com/wiki/Skins">skin</a> the player should use</param>
+ * <param name="skinid">The <a href="https://www.open.mp/docs/scripting/resources/skins">skin</a> the player should use</param>
  * <seealso name="GetPlayerSkin" />
  * <seealso name="SetSpawnInfo" />
  * <remarks>If a player's skin is set when they are crouching, in a vehicle, or performing certain animations,
@@ -1036,7 +1237,7 @@ native Float:GetPlayerDistanceFromPoint(playerid, Float:x, Float:y, Float:z);
 /**
  * <library>omp_player</library>
  * <summary>Retrieves the player's current interior.  A list of currently known interiors with their
- * positions can be found on <a href="http://wiki.sa-mp.com/wiki/Interiorids">this</a> page.</summary>
+ * positions can be found on <a href="https://www.open.mp/docs/scripting/resources/interiorids">this</a> page.</summary>
  * <param name="playerid">The player to get the interior ID of</param>
  * <seealso name="SetPlayerInterior" />
  * <seealso name="GetPlayerVirtualWorld" />
@@ -1088,7 +1289,7 @@ native bool:GetPlayerPos(playerid, &Float:x, &Float:y, &Float:z);
  * <library>omp_player</library>
  * <summary>Set a player's facing angle (z rotation).</summary>
  * <param name="playerid">The ID of the player to set the facing angle of</param>
- * <param name="ang">The angle the player should face</param>
+ * <param name="angle">The angle the player should face</param>
  * <seealso name="GetPlayerFacingAngle" />
  * <seealso name="SetPlayerPos" />
  * <remarks>Angles are reversed in GTA:SA; 90 degrees would be East in the real world, but in GTA:SA
@@ -1099,13 +1300,13 @@ native bool:GetPlayerPos(playerid, &Float:x, &Float:y, &Float:z);
  *   <b><c>0</c></b>: The function failed to execute.  The player specified does not exist.
  * </returns>
  */
-native bool:SetPlayerFacingAngle(playerid, Float:ang);
+native bool:SetPlayerFacingAngle(playerid, Float:angle);
 
 /**
  * <library>omp_player</library>
  * <summary>Gets the angle a player is facing.</summary>
  * <param name="playerid">The player you want to get the angle of</param>
- * <param name="ang">The Float to store the angle in, passed by reference</param>
+ * <param name="angle">The Float to store the angle in, passed by reference</param>
  * <seealso name="GetVehicleZAngle" />
  * <seealso name="SetPlayerFacingAngle" />
  * <remarks>Angles are reversed in GTA:SA; 90 degrees would be East in the real world, but in GTA:SA
@@ -1114,7 +1315,7 @@ native bool:SetPlayerFacingAngle(playerid, Float:ang);
  * <remarks>Angles returned when inside a vehicle is rarely correct.  To get the correct facing angle
  * while inside a vehicle, use <a href="#GetVehicleZAngle">GetVehicleZAngle</a>.</remarks>
  */
-native bool:GetPlayerFacingAngle(playerid, &Float:ang);
+native bool:GetPlayerFacingAngle(playerid, &Float:angle);
 
 /**
  * <library>omp_player</library>
@@ -1128,7 +1329,7 @@ native bool:GetPlayerFacingAngle(playerid, &Float:ang);
  * <seealso name="OnPlayerClickMap" />
  * <remarks>This function does not work if the new coordinates are far away from where the player currently
  * is.  The z height will be <b><c>0</c></b>, which will likely put them underground.  It is highly
- * recommended that the <a href="http://forum.sa-mp.com/showthread.php?t=275492">MapAndreas plugin</a>
+ * recommended that the <a href="https://github.com/philip1337/samp-plugin-mapandreas">MapAndreas plugin</a>
  * be used instead.</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
@@ -1275,9 +1476,9 @@ native bool:ClearAnimations(playerid, FORCE_SYNC:forceSync = SYNC_NONE);
 
 /**
  * <library>omp_player</library>
- * <summary>Retrieves a player's current <a href="http://wiki.sa-mp.com/wiki/SpecialActions">special
+ * <summary>Retrieves a player's current <a href="https://www.open.mp/docs/scripting/resources/specialactions">special
  * action</a>.</summary>
- * <param name="playerid">The ID of the player to get the <a href="http://wiki.sa-mp.com/wiki/SpecialActions">special
+ * <param name="playerid">The ID of the player to get the <a href="https://www.open.mp/docs/scripting/resources/specialactions">special
  * action</a> of</param>
  * <seealso name="SetPlayerSpecialAction" />
  * <seealso name="GetPlayerState" />
@@ -1314,7 +1515,7 @@ native bool:ClearAnimations(playerid, FORCE_SYNC:forceSync = SYNC_NONE);
  * animation with visible pee.</li>
  *   </ul>
  * </remarks>
- * <returns>The <a href="http://wiki.sa-mp.com/wiki/SpecialActions">special action</a> of the player.</returns>
+ * <returns>The <a href="https://www.open.mp/docs/scripting/resources/specialactions">special action</a> of the player.</returns>
  */
 native SPECIAL_ACTION:GetPlayerSpecialAction(playerid);
 
@@ -1370,6 +1571,30 @@ native bool:SendClientMessage(playerid, colour, const format[], OPEN_MP_TAGS:...
 
 /**
  * <library>omp_player</library>
+ * <summary>This function sends a message to a specific player with a chosen colour in the chat.  The
+ * whole line in the chatbox will be in the set colour unless colour embedding is used (since <b><c>0.3c</c></b>).</summary>
+ * <param name="playerid">The ID of the player to display the message to</param>
+ * <param name="colour">The colour of the message (<b>RGBA</b>)</param>
+ * <param name="format">The text that will be displayed <b>(max 144 characters).  Optionally formatted.</b></param>
+ * <seealso name="SendClientMessageToAll" />
+ * <seealso name="SendPlayerMessageToPlayer" />
+ * <seealso name="SendPlayerMessageToAll" />
+ * <remarks>If a message is longer than 144 characters, it will not be sent.  Truncation can be used
+ * to prevent this.  Displaying a message on multiple lines will also solve this issue. </remarks>
+ * <remarks>Avoid using the percent sign (or format specifiers) in the actual message text without properly
+ * escaping it (like <b><c>%%</c></b>).  It will result in crashes otherwise. </remarks>
+ * <remarks>You can use colour embedding for multiple colours in the message. </remarks>
+ * <returns>
+ *   <b><c>1</c></b>: The function executed successfully.  Success is reported when the string is over
+ * 144 characters, but the message won't be sent.<br />
+ *   <b><c>0</c></b>: The function failed to execute.  The player is not connected.
+ * </returns>
+ */
+#pragma deprecated Use `SendClientMessagef`
+native bool:SendClientMessagef(playerid, colour, const format[], OPEN_MP_TAGS:...) = SendClientMessage;
+
+/**
+ * <library>omp_player</library>
  * <summary>Shows 'game text' (on-screen text) for a certain length of time for a specific player.</summary>
  * <param name="playerid">The ID of the player to show the gametext for</param>
  * <param name="format">The text to be displayed.  May be formatted.</param>
@@ -1384,6 +1609,26 @@ native bool:SendClientMessage(playerid, colour, const format[], OPEN_MP_TAGS:...
  * </returns>
  */
 native bool:GameTextForPlayer(playerid, const format[], time, style, OPEN_MP_TAGS:...);
+
+/**
+ * <library>omp_player</library>
+ * <summary>Shows 'game text' (on-screen text) for a certain length of time for a specific player.</summary>
+ * <param name="playerid">The ID of the player to show the gametext for</param>
+ * <param name="format">The text to be displayed.  May be formatted.</param>
+ * <param name="time">The duration of the text being shown in milliseconds</param>
+ * <param name="style">The style of text to be displayed</param>
+ * <seealso name="GameTextForAll" />
+ * <seealso name="TextDrawShowForPlayer" />
+ * <returns>
+ *   <b><c>1</c></b>: The function executed successfully.  Success is reported when the style and/or
+ * time is invalid.  Nothing will happen though (no text displayed).  May also cause game crashes.<br
+ * />
+ *   <b><c>0</c></b>: The function failed to execute.  This means either the string is null or the player
+ * is not connected.
+ * </returns>
+ */
+#pragma deprecated Use `GameTextForPlayerf`
+native bool:GameTextForPlayerf(playerid, const format[], time, style, OPEN_MP_TAGS:...) = GameTextForPlayer;
 
 /**
  * <library>omp_player</library>
@@ -1441,7 +1686,7 @@ native bool:GetGameText(playerid, style, message[], len = sizeof (message), time
  * <param name="playerid">The ID of the player to send the death message to</param>
  * <param name="killer">The ID of the killer (can be <b><c>INVALID_PLAYER_ID</c></b>)</param>
  * <param name="killee">The ID of the player that died</param>
- * <param name="weapon">The <a href="http://wiki.sa-mp.com/wiki/Weapons">reason</a> (not always a weapon)
+ * <param name="weapon">The <a href="https://www.open.mp/docs/scripting/resources/weaponids">reason</a> (not always a weapon)
  * for the victim's death.  Special icons can also be used (<b><c>ICON_CONNECT</c></b> and <b><c>ICON_DISCONNECT</c></b>)</param>
  * <seealso name="SendDeathMessage" />
  * <seealso name="OnPlayerDeath" />
@@ -1468,6 +1713,24 @@ native bool:SendDeathMessageToPlayer(playerid, killer, killee, weapon);
  *  It will result in crashes otherwise.</remarks>
  */
 native bool:SendPlayerMessageToPlayer(playerid, senderid, const format[], OPEN_MP_TAGS:...);
+
+/**
+ * <library>omp_player</library>
+ * <summary>Sends a message in the name of a player to another player on the server.  The message will
+ * appear in the chat box but can only be seen by the user specified with <paramref name="playerid"
+ * />.  The line will start with the sender's name in their colour, followed by the message in white.</summary>
+ * <param name="playerid">The ID of the player who will receive the message</param>
+ * <param name="senderid">The sender's ID.  If invalid, the message will not be sent</param>
+ * <param name="format">The message that will be sent.  May be formatted.</param>
+ * <seealso name="SendPlayerMessageToAll" />
+ * <seealso name="SendClientMessage" />
+ * <seealso name="SendClientMessageToAll" />
+ * <seealso name="OnPlayerText" />
+ * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
+ *  It will result in crashes otherwise.</remarks>
+ */
+#pragma deprecated Use `SendPlayerMessageToPlayer`
+native bool:SendPlayerMessageToPlayerf(playerid, senderid, const format[], OPEN_MP_TAGS:...) = SendPlayerMessageToPlayer;
 
 /**
  * <library>omp_player</library>
@@ -1553,6 +1816,14 @@ native GetPlayerColor(playerid);
 
 /**
  * <library>omp_player</library>
+ * <summary>Gets the default colour for this player ID.</summary>
+ * <param name="playerid">The ID of the player to get the colour of.  Doesn't need to be connected</param>
+ * <seealso name="GetPlayerColor" />
+ */
+native GetDefaultPlayerColour(playerid);
+
+/**
+ * <library>omp_player</library>
  * <summary>Sets the name of a player.</summary>
  * <param name="playerid">The ID of the player to set the name of</param>
  * <param name="name">The name to set.  Must be 1-24 characters long and only contain valid characters
@@ -1570,11 +1841,11 @@ native GetPlayerColor(playerid);
  * </remarks>
  * <returns>
  *   <b><c>1</c></b> The name was changed successfully.<br />
- *   <b><c>0</c></b> The player already has that name.<br />
- *   <b><c>-1</c></b> The name can not be changed (it's already in use, too long or has invalid characters).
+ *   <b><c>0</c></b> The player is not connected or the name is already in use.<br />
+ *   <b><c>-1</c></b> The name can not be changed (it's less than 3 symbols, too long or has invalid characters).
  * </returns>
  */
-native bool:SetPlayerName(playerid, const name[]);
+native SetPlayerName(playerid, const name[]);
 
 /**
  * <library>omp_player</library>
@@ -1593,7 +1864,7 @@ native bool:SetPlayerName(playerid, const name[]);
  * and the player has to quit to choose a valid name.</remarks>
  * <returns>The length of the player's name. <b><c>0</c></b> if player specified doesn't exist.</returns>
  */
-native bool:GetPlayerName(playerid, name[], len = sizeof (name));
+native GetPlayerName(playerid, name[], len = sizeof (name));
 
 /**
  * <library>omp_player</library>
@@ -1711,7 +1982,7 @@ native bool:TogglePlayerControllable(playerid, bool:controllable);
  * <library>omp_player</library>
  * <summary>Check which keys a player is pressing.</summary>
  * <param name="playerid">The ID of the player to get the keys of</param>
- * <param name="keys">Bitmask containing the player's key states. <a href="http://wiki.sa-mp.com/wiki/Keys">List
+ * <param name="keys">Bitmask containing the player's key states. <a href="https://www.open.mp/docs/scripting/resources/keys">List
  * of keys</a></param>
  * <param name="updown">Up/down state</param>
  * <param name="leftright">Left/right state</param>
@@ -1723,7 +1994,7 @@ native bool:TogglePlayerControllable(playerid, bool:controllable);
  * keys "W" and "S" can be detected with the "keys" parameter. </remarks>
  * <returns>The keys are stored in the specified variables.</returns>
  */
-native bool:GetPlayerKeys(playerid, &KEY:keys, &KEY:updown, &KEY:leftright);
+native bool:GetPlayerKeys(playerid, &KEY:keys, &updown, &leftright);
 
 /**
  * <library>omp_player</library>
@@ -1743,7 +2014,7 @@ native bool:SetPlayerMarkerForPlayer(playerid, targetid, colour);
  * <library>omp_player</library>
  * <summary>Get the colour of a player's <b>nametag</b> and <b>radar blip</b> for another player.</summary>
  * <param name="playerid">The player that can see the player's changed blip/nametag colour</param>
- * <param name="targetid">The player whose colour was be changed</param>
+ * <param name="targetid">The player whose colour has been changed</param>
  * <seealso name="ShowPlayerMarkers" />
  * <seealso name="LimitPlayerMarkerRadius" />
  * <seealso name="SetPlayerColor" />
@@ -1757,12 +2028,12 @@ native GetPlayerMarkerForPlayer(playerid, targetid);
  * <summary>Starts recording a player's movements to a file, which can then be reproduced by an NPC.</summary>
  * <param name="playerid">The ID of the player to record</param>
  * <param name="recordType">The type of recording</param>
- * <param name="recordFile">The name of the file which will hold the recorded data.  It will be saved
+ * <param name="recordFile">The name of the file which will hold the recorded data. It will be saved
  * in the scriptfiles directory, with an automatically added .rec extension, you will need to move the
  * file to npcmodes/recordings to use for playback</param>
  * <seealso name="StopRecordingPlayerData" />
  */
-forward bool:StartRecordingPlayerData(playerid, PLAYER_RECORDING_TYPE:recordType, const recordFile[]);
+native bool:StartRecordingPlayerData(playerid, PLAYER_RECORDING_TYPE:recordType, const recordFile[]);
 
 /**
  * <library>omp_player</library>
@@ -1771,25 +2042,48 @@ forward bool:StartRecordingPlayerData(playerid, PLAYER_RECORDING_TYPE:recordType
  * <param name="playerid">The player you want to stop the recordings of</param>
  * <seealso name="StartRecordingPlayerData" />
  */
-forward bool:StopRecordingPlayerData(playerid);
+native bool:StopRecordingPlayerData(playerid);
 
 /**
  * <library>omp_player</library>
+ * <summary>Checks if a player is spawned.</summary>
+ * <param name="playerid">The ID of the player to check.</param>
+ * <returns><b><c>true</c></b> if the player is spawned, <b><c>false</c></b> if not.</returns>
+ * <seealso name="SpawnPlayer" />
  */
 native bool:IsPlayerSpawned(playerid);
 
 /**
  * <library>omp_player</library>
+ * <summary>Check if the player is controllable.</summary>
+ * <param name="playerid">The ID of the player to check.</param>
+ * <returns>
+ *   <b><c>true</c></b>: Controllable.<br />
+ *   <b><c>false</c></b>: Uncontrollable.
+ * </returns>
+ * <seealso name="SpawnPlayer" />
  */
 native bool:IsPlayerControllable(playerid);
 
 /**
  * <library>omp_player</library>
+ * <summary>Toggle player's ghost mode. Ghost mode disables the collision between player models.</summary>
+ * <param name="playerid">The ID of the player to toggle the ghost mode.</param>
+ * <param name="enable">true for enable and false for disable.</param>
+ * <returns>This function always returns <b><c>true</c></b>.</returns>
+ * <seealso name="GetPlayerGhostMode" />
  */
 native bool:TogglePlayerGhostMode(playerid, bool:enable);
 
 /**
  * <library>omp_player</library>
+ * <summary>Gets player's ghost mode.</summary>
+ * <param name="playerid">The ID of the player to get the ghost mode of.</param>
+ * <returns>
+ *   <b><c>true</c></b>: Controllable.<br />
+ *   <b><c>false</c></b>: Uncontrollable.
+ * </returns>
+ * <seealso name="SpawnPlayer" />
  */
 native bool:GetPlayerGhostMode(playerid);
 
@@ -1815,10 +2109,10 @@ native GetPlayerMoney(playerid);
  * <seealso name="GivePlayerMoney" />
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player is not connected.
+ *   <b><c>0</c></b>: The function failed to execute. This means the player is not connected.
  * </returns>
  */
-native ResetPlayerMoney(playerid);
+native bool:ResetPlayerMoney(playerid);
 
 /**
  * <library>omp_player</library>
@@ -1829,10 +2123,10 @@ native ResetPlayerMoney(playerid);
  * <seealso name="GetPlayerMoney" />
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player is not connected.
+ *   <b><c>0</c></b>: The function failed to execute. This means the player is not connected.
  * </returns>
  */
-native GivePlayerMoney(playerid, money);
+native bool:GivePlayerMoney(playerid, money);
 
 /**
  * <library>omp_player</library>
@@ -1847,10 +2141,10 @@ native GivePlayerMoney(playerid, money);
  * <remarks>The function's name is armour, not armor (Americanized).</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player specified does not exist.
+ *   <b><c>0</c></b>: The function failed to execute. This means the player specified does not exist.
  * </returns>
  */
-native SetPlayerArmour(playerid, Float:armour);
+native bool:SetPlayerArmour(playerid, Float:armour);
 
 /**
  * <library>omp_player</library>
@@ -1871,7 +2165,7 @@ native SetPlayerArmour(playerid, Float:armour);
  *   <b><c>0</c></b> - failure (i.e.  player not connected).<br />
  * </returns>
  */
-native GetPlayerArmour(playerid, &Float:armour);
+native bool:GetPlayerArmour(playerid, &Float:armour);
 
 /**
  * <library>omp_player</library>
@@ -1883,10 +2177,10 @@ native GetPlayerArmour(playerid, &Float:armour);
  * <seealso name="GetPlayerWeapon" />
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player is not connected.<br />
+ *   <b><c>0</c></b>: The function failed to execute. This means the player is not connected.<br />
  * </returns>
  */
-native GivePlayerWeapon(playerid, WEAPON:weaponid, ammo);
+native bool:GivePlayerWeapon(playerid, WEAPON:weaponid, ammo);
 
 /**
  * <library>omp_player</library>
@@ -1899,10 +2193,10 @@ native GivePlayerWeapon(playerid, WEAPON:weaponid, ammo);
  * <a href="#SetPlayerAmmo">SetPlayerAmmo</a>.</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully, even if they didn't have the weapon (they absolutely don't have it now)<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player specified does not exist.
+ *   <b><c>0</c></b>: The function failed to execute. This means the player specified does not exist.
  * </returns>
  */
-native RemovePlayerWeapon(playerid, WEAPON:weaponid);
+native bool:RemovePlayerWeapon(playerid, WEAPON:weaponid);
 
 /**
  * <library>omp_player</library>
@@ -1914,7 +2208,7 @@ native RemovePlayerWeapon(playerid, WEAPON:weaponid);
  * <remarks>Prior to version <b>0.3z R1-2</b>, when the player state is <b>PLAYER_STATE_PASSENGER</b>
  * this function returns the weapon held by the player before they entered the vehicle.  If a cheat
  * is used to spawn a weapon inside a vehicle, this function will not report it.</remarks>
- * <returns>The ID of the player's current weapon.  Returns <b><c>-1</c></b> if the player specified
+ * <returns>The ID of the player's current weapon. Returns <b><c>-1</c></b> if the player specified
  * does not exist.</returns>
  */
 native WEAPON:GetPlayerWeapon(playerid);
@@ -1929,16 +2223,16 @@ native WEAPON:GetPlayerWeapon(playerid);
  * <a href="#SetPlayerAmmo">SetPlayerAmmo</a>.</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  This means the player specified does not exist.
+ *   <b><c>0</c></b>: The function failed to execute. This means the player specified does not exist.
  * </returns>
  */
-native ResetPlayerWeapons(playerid);
+native bool:ResetPlayerWeapons(playerid);
 
 /**
  * <library>omp_player</library>
  * <summary>Set the ammo of a player's weapon.</summary>
  * <param name="playerid">The ID of the player to set the weapon ammo of</param>
- * <param name="weaponid">The ID of the <a href="http://wiki.sa-mp.com/wiki/Weapons">weapon</a> to set
+ * <param name="weaponid">The ID of the <a href="https://www.open.mp/docs/scripting/resources/weaponids">weapon</a> to set
  * the ammo of.</param>
  * <param name="ammo">The amount of ammo to set</param>
  * <seealso name="GetPlayerAmmo" />
@@ -1948,12 +2242,12 @@ native ResetPlayerWeapons(playerid);
  * the weapon will still show up in <a href="#GetPlayerWeaponData">GetPlayerWeaponData</a>, albeit with
  * <b><c>0</c></b> ammo.</remarks>
  * <returns>
- *   <b><c>1</c></b>: The function executed successfully.  Success is also returned when the weapon
+ *   <b><c>1</c></b>: The function executed successfully. Success is also returned when the weapon
  * specified is invalid.<br />
- *   <b><c>0</c></b>: The function failed to execute.  The player isn't connected.<br />
+ *   <b><c>0</c></b>: The function failed to execute. The player isn't connected.<br />
  * </returns>
  */
-native SetPlayerAmmo(playerid, WEAPON:weaponid, ammo);
+native bool:SetPlayerAmmo(playerid, WEAPON:weaponid, ammo);
 
 /**
  * <library>omp_player</library>
@@ -1967,10 +2261,10 @@ native SetPlayerAmmo(playerid, WEAPON:weaponid, ammo);
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.  Success is returned even when the function
  * fails to execute (the player doesn't have the weapon specified, or it is an invalid weapon).<br />
- *   <b><c>0</c></b>: The function failed to execute.  The player is not connected.
+ *   <b><c>0</c></b>: The function failed to execute. The player is not connected.
  * </returns>
  */
-native SetPlayerArmedWeapon(playerid, WEAPON:weaponid);
+native bool:SetPlayerArmedWeapon(playerid, WEAPON:weaponid);
 
 /**
  * <library>omp_player</library>
@@ -1997,11 +2291,11 @@ native GetPlayerAmmo(playerid);
  * <remarks>Old weapons with no ammo left are still returned.</remarks>
  * <returns>
  *   <b><c>1</c></b>: The function executed successfully.<br />
- *   <b><c>0</c></b>: The function failed to execute.  The player isn't connected and/or the weapon
+ *   <b><c>0</c></b>: The function failed to execute. The player isn't connected and/or the weapon
  * slot specified is invalid (valid is <b><c>0-12</c></b>).
  * </returns>
  */
-native GetPlayerWeaponData(playerid, WEAPON_SLOT:slot, &WEAPON:weapons, &ammo);
+native bool:GetPlayerWeaponData(playerid, WEAPON_SLOT:slot, &WEAPON:weapon, &ammo);
 
 /**
  * <library>omp_player</library>
@@ -2025,7 +2319,7 @@ native WEAPONSTATE:GetPlayerWeaponState(playerid);
 /**
  * <library>omp_player</library>
  * <summary>This function gets the ID of the vehicle the player is currently in.  Note: <b>NOT</b> the
- * model ID of the vehicle.  See <a href="#GetVehicleModel">GetVehicleModel</a> for that.</summary>
+ * model ID of the vehicle. See <a href="#GetVehicleModel">GetVehicleModel</a> for that.</summary>
  * <param name="playerid">The ID of the player in the vehicle that you want to get the ID of</param>
  * <seealso name="IsPlayerInVehicle" />
  * <seealso name="IsPlayerInAnyVehicle" />
@@ -2079,7 +2373,7 @@ native GetPlayerVehicleSeat(playerid);
  *   <b><c>0</c></b>: The function failed to execute.  The player or vehicle don't exist.
  * </returns>
  */
-native PutPlayerInVehicle(playerid, vehicleid, seatid);
+native bool:PutPlayerInVehicle(playerid, vehicleid, seatid);
 
 /**
  * <library>omp_player</library>
@@ -2119,7 +2413,7 @@ native bool:IsPlayerInAnyVehicle(playerid);
  *   <b><c>0</c></b>: The function failed to execute.  This means the player is not connected.
  * </returns>
  */
-native RemovePlayerFromVehicle(playerid);
+native bool:RemovePlayerFromVehicle(playerid, bool:force = false);
 
 /**
  * <library>omp_player</library>
@@ -2145,7 +2439,7 @@ native GetPlayerSurfingObjectID(playerid);
 /**
  * <library>omp_player</library>
  */
-native GetPlayerSurfingOffsets(playerid, &Float:offsetX, &Float:offsetY, &Float:offsetZ);
+native bool:GetPlayerSurfingOffsets(playerid, &Float:offsetX, &Float:offsetY, &Float:offsetZ);
 
 /*
 native #Camera()
@@ -2293,7 +2587,7 @@ native bool:PlayerSpectateVehicle(playerid, targetid, SPECTATE_MODE:mode = SPECT
  * <seealso name="GetPlayerWeapon" />
  * <seealso name="VectorSize" />
  * <seealso name="OnPlayerWeaponShot" />
- * <remarks>This function will only work when <a href="http://wiki.sa-mp.com/wiki/Lag_Compensation">lag
+ * <remarks>This function will only work when <a href="https://www.open.mp/docs/server/LagCompensation">lag
  * compensation</a> is <b>enabled</b>. </remarks>
  * <remarks>If the player hit nothing, the hit positions will be <b><c>0</c></b>.  This means you can't
  * currently calculate how far a bullet travels through open air. </remarks>
@@ -2611,7 +2905,7 @@ native bool:IsPlayerUsingOfficialClient(playerid);
  * <param name="allow"><b><c>1</c></b> to allow, <b><c>0</c></b> to disallow</param>
  * <seealso name="AllowAdminTeleport" />
  */
-native AllowPlayerTeleport(playerid, bool:allow);
+native bool:AllowPlayerTeleport(playerid, bool:allow);
 
 /**
  * <library>omp_player</library>
@@ -2630,7 +2924,7 @@ native bool:IsPlayerTeleportAllowed(playerid);
  * <remarks>Players still have weapons server-side, they just can't arm them.</remarks>
  * <seealso name="IsPlayerWeaponsAllowed" />
  */
-native AllowPlayerWeapons(playerid, bool:allow);
+native bool:AllowPlayerWeapons(playerid, bool:allow);
 
 /**
  * <library>omp_player</library>
@@ -2639,102 +2933,6 @@ native AllowPlayerWeapons(playerid, bool:allow);
  * <seealso name="AllowPlayerWeapons" />
  */
 native bool:ArePlayerWeaponsAllowed(playerid);
-
-/*
-                                                                                                                             
-    88888888ba,                                                                                                          88  
-    88      `"8b                                                                              ,d                         88  
-    88        `8b                                                                             88                         88  
-    88         88   ,adPPYba,  8b,dPPYba,   8b,dPPYba,   ,adPPYba,   ,adPPYba,  ,adPPYYba,  MM88MMM  ,adPPYba,   ,adPPYb,88  
-    88         88  a8P_____88  88P'    "8a  88P'   "Y8  a8P_____88  a8"     ""  ""     `Y8    88    a8P_____88  a8"    `Y88  
-    88         8P  8PP"""""""  88       d8  88          8PP"""""""  8b          ,adPPPPP88    88    8PP"""""""  8b       88  
-    88      .a8P   "8b,   ,aa  88b,   ,a8"  88          "8b,   ,aa  "8a,   ,aa  88,    ,88    88,   "8b,   ,aa  "8a,   ,d88  
-    88888888Y"'     `"Ybbd8"'  88`YbbdP"'   88           `"Ybbd8"'   `"Ybbd8"'  `"8bbdP"Y8    "Y888  `"Ybbd8"'   `"8bbdP"Y8  
-                               88                                                                                            
-                               88                                                                                            
-
-*/
-
-/*
-native #Deprecated();
-*/
-
-/**
- * <library>omp_player</library>
- * <summary>This function sends a message to a specific player with a chosen colour in the chat.  The
- * whole line in the chatbox will be in the set colour unless colour embedding is used (since <b><c>0.3c</c></b>).</summary>
- * <param name="playerid">The ID of the player to display the message to</param>
- * <param name="colour">The colour of the message (<b>RGBA</b>)</param>
- * <param name="format">The text that will be displayed <b>(max 144 characters).  Optionally formatted.</b></param>
- * <seealso name="SendClientMessageToAll" />
- * <seealso name="SendPlayerMessageToPlayer" />
- * <seealso name="SendPlayerMessageToAll" />
- * <remarks>If a message is longer than 144 characters, it will not be sent.  Truncation can be used
- * to prevent this.  Displaying a message on multiple lines will also solve this issue. </remarks>
- * <remarks>Avoid using the percent sign (or format specifiers) in the actual message text without properly
- * escaping it (like <b><c>%%</c></b>).  It will result in crashes otherwise. </remarks>
- * <remarks>You can use colour embedding for multiple colours in the message. </remarks>
- * <returns>
- *   <b><c>1</c></b>: The function executed successfully.  Success is reported when the string is over
- * 144 characters, but the message won't be sent.<br />
- *   <b><c>0</c></b>: The function failed to execute.  The player is not connected.
- * </returns>
- */
-#pragma deprecated Use `SendClientMessage`
-native bool:SendClientMessagef(playerid, colour, const format[], OPEN_MP_TAGS:...) = SendClientMessage;
-
-/**
- * <library>omp_player</library>
- * <summary>Displays a message in chat to all players.  This is a multi-player equivalent of
- * <a href="#SendClientMessage">SendClientMessage</a>.</summary>
- * <param name="colour">The colour of the message (<b>RGBA</b>)</param>
- * <param name="format">The message to show (<b>max 144 characters</b>).  Optionally formatted.</param>
- * <seealso name="SendClientMessage" />
- * <seealso name="SendPlayerMessageToAll" />
- * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
- *  It will result in crashes otherwise.</remarks>
- * <returns>This function always returns <b><c>1</c></b>.</returns>
- */
-#pragma deprecated Use `SendClientMessageToAll`
-native void:SendClientMessageToAllf(colour, const format[], OPEN_MP_TAGS:...) = SendClientMessageToAll;
-
-/**
- * <library>omp_player</library>
- * <summary>Shows 'game text' (on-screen text) for a certain length of time for a specific player.</summary>
- * <param name="playerid">The ID of the player to show the gametext for</param>
- * <param name="format">The text to be displayed.  May be formatted.</param>
- * <param name="time">The duration of the text being shown in milliseconds</param>
- * <param name="style">The style of text to be displayed</param>
- * <seealso name="GameTextForAll" />
- * <seealso name="TextDrawShowForPlayer" />
- * <returns>
- *   <b><c>1</c></b>: The function executed successfully.  Success is reported when the style and/or
- * time is invalid.  Nothing will happen though (no text displayed).  May also cause game crashes.<br
- * />
- *   <b><c>0</c></b>: The function failed to execute.  This means either the string is null or the player
- * is not connected.
- * </returns>
- */
-#pragma deprecated Use `GameTextForPlayer`
-native bool:GameTextForPlayerf(playerid, const format[], time, style, OPEN_MP_TAGS:...) = GameTextForPlayer;
-
-/**
- * <library>omp_player</library>
- * <summary>Sends a message in the name of a player to another player on the server.  The message will
- * appear in the chat box but can only be seen by the user specified with <paramref name="playerid"
- * />.  The line will start with the sender's name in their colour, followed by the message in white.</summary>
- * <param name="playerid">The ID of the player who will receive the message</param>
- * <param name="senderid">The sender's ID.  If invalid, the message will not be sent</param>
- * <param name="format">The message that will be sent.  May be formatted.</param>
- * <seealso name="SendPlayerMessageToAll" />
- * <seealso name="SendClientMessage" />
- * <seealso name="SendClientMessageToAll" />
- * <seealso name="OnPlayerText" />
- * <remarks>Avoid using format specifiers in your messages without formatting the string that is sent.
- *  It will result in crashes otherwise.</remarks>
- */
-#pragma deprecated Use `SendPlayerMessageToPlayer`
-native bool:SendPlayerMessageToPlayerf(playerid, senderid, const format[], OPEN_MP_TAGS:...) = SendPlayerMessageToPlayer;
 
 /*
                                                                                                   
@@ -2787,10 +2985,9 @@ forward OnPlayerStreamOut(playerid, forplayerid);
  * <param name="issuerid">The ID of the player that caused the damage. <b><c>INVALID_PLAYER_ID</c></b>
  * if self-inflicted</param>
  * <param name="amount">The amount of damage the player took (health and armour combined)</param>
- * <param name="weaponid">The ID of the <a href="http://wiki.sa-mp.com/wiki/Weapons">weapon/reason</a>
+ * <param name="weaponid">The ID of the <a href="https://www.open.mp/docs/scripting/resources/weaponids">weapon/reason</a>
  * for the damage</param>
- * <param name="bodypart">The body part that was hit. (NOTE: This parameter was added in <b>0.3z</b>.
- *  Leave it out if using an older version!)</param>
+ * <param name="bodypart">The body part that was hit.</param>
  * <seealso name="OnPlayerGiveDamage" />
  * <seealso name="OnPlayerWeaponShot" />
  * <remarks><a href="#GetPlayerHealth">GetPlayerHealth</a> and <a href="#GetPlayerArmour">GetPlayerArmour</a>
@@ -2814,17 +3011,16 @@ forward OnPlayerStreamOut(playerid, forplayerid);
  * from seeing it.
  * </returns>
  */
-forward OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
+forward OnPlayerTakeDamage(playerid, issuerid, Float:amount, WEAPON:weaponid, bodypart);
 
 /**
  * <summary>This callback is called when a player gives damage to another player.</summary>
  * <param name="playerid">The ID of the player that gave damage</param>
  * <param name="damagedid">The ID of the player that received damage</param>
  * <param name="amount">The amount of health/armour damagedid has lost (combined)</param>
- * <param name="weaponid">The <a href="http://wiki.sa-mp.com/wiki/Weapons">reason</a> that caused the
+ * <param name="weaponid">The <a href="https://www.open.mp/docs/scripting/resources/weaponids">reason</a> that caused the
  * damage</param>
- * <param name="bodypart">The body part that was hit. (NOTE: This parameter was added in <b>0.3z</b>.
- *  Leave it out if using an older version!)</param>
+ * <param name="bodypart">The body part that was hit.</param>
  * <seealso name="OnPlayerTakeDamage" />
  * <remarks>
  *   Keep in mind this function can be inaccurate in some cases.<br />
@@ -2848,7 +3044,7 @@ forward OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
  * from seeing it.
  * </returns>
  */
-forward OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
+forward OnPlayerGiveDamage(playerid, damagedid, Float:amount, WEAPON:weaponid, bodypart);
 
 /**
  * <summary>Called when a player double-clicks on a player on the scoreboard.</summary>
@@ -2872,7 +3068,7 @@ forward OnPlayerClickPlayer(playerid, clickedplayerid, CLICK_SOURCE:source);
  * <param name="playerid">The ID of the player that died</param>
  * <param name="killerid">The ID of the player that killed the player who died, or <b><c>INVALID_PLAYER_ID</c></b>
  * if there was none</param>
- * <param name="reason">The ID of the <a href="http://wiki.sa-mp.com/wiki/Weapons">reason</a> for the
+ * <param name="reason">The ID of the <a href="https://www.open.mp/docs/scripting/resources/weaponids">reason</a> for the
  * player's death</param>
  * <seealso name="OnPlayerSpawn" />
  * <seealso name="SendDeathMessage" />
@@ -2890,14 +3086,14 @@ forward OnPlayerClickPlayer(playerid, clickedplayerid, CLICK_SOURCE:source);
  *   It is always called first in filterscripts.
  * </returns>
  */
-forward OnPlayerDeath(playerid, killerid, reason);
+forward OnPlayerDeath(playerid, killerid, WEAPON:reason);
 
 /**
  * <summary>This callback is called when a player fires a shot from a weapon.  Only bullet weapons are
  * supported.  Only <b>passenger</b> drive-by is supported (not driver drive-by, and not sea sparrow
  * / hunter shots).</summary>
  * <param name="playerid">The ID of the player that shot a weapon</param>
- * <param name="weaponid">The ID of the <a href="http://wiki.sa-mp.com/wiki/Weapons">weapon</a> shot
+ * <param name="weaponid">The ID of the <a href="https://www.open.mp/docs/scripting/resources/weaponids">weapon</a> shot
  * by the player</param>
  * <param name="hittype">The type of thing the shot hit (none, player, vehicle, or (player)object)</param>
  * <param name="hitid">The ID of the player, vehicle or object that was hit</param>
@@ -2942,16 +3138,7 @@ forward OnPlayerDeath(playerid, killerid, reason);
  * scripts from seeing it.
  * </returns>
  */
-forward OnPlayerWeaponShot(playerid, weaponid, BULLET_HIT_TYPE:hittype, hitid, Float:fX, Float:fY, Float:fZ);
-
-/**
- * <summary>This callback is called when a SendClientCheck request comletes</summary>
- * <param name="playerid">The ID of the player who got cash from the game</param>
- * <param name="amount">The amount of cash given</param>
- * <param name="source">Where the money came from</param>
- * <remarks>Doesn't work</remarks>
- */
-forward OnScriptCash(playerid, amount, source);
+forward OnPlayerWeaponShot(playerid, WEAPON:weaponid, BULLET_HIT_TYPE:hittype, hitid, Float:fX, Float:fY, Float:fZ);
 
 /**
  * <summary>OnPlayerClickMap is called when a player places a target/waypoint on the pause menu map
@@ -2964,7 +3151,7 @@ forward OnScriptCash(playerid, amount, source);
  * <seealso name="SetPlayerPosFindZ" />
  * <seealso name="GetPlayerPos" />
  * <remarks>The Z value returned will be <b><c>0</c></b> (invalid) if it is far away from the player;
- * use the <a href="http://forum.sa-mp.com/showthread.php?t=275492">MapAndreas plugin</a> to get a more
+ * use the <a href="https://github.com/philip1337/samp-plugin-mapandreas">MapAndreas plugin</a> to get a more
  * accurate Z coordinate.</remarks>
  * <returns>
  *   <b><c>1</c></b> - Will prevent other filterscripts from receiving this callback.<br />
@@ -3033,9 +3220,10 @@ forward OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
  * <summary>This callback is called when the state of any supported key is changed (pressed/released).
  *  Directional keys do not trigger OnPlayerKeyStateChange (up/down/left/right).</summary>
  * <param name="playerid">The ID of the player that pressed or released a key</param>
- * <param name="newkeys">A map (bitmask) of the keys currently held - see <a href="http://wiki.sa-mp.com/wiki/Keys">here</a></param>
+ * <param name="newkeys">A map (bitmask) of the keys currently held - see <a href="https://www.open.mp/docs/scripting/resources/keys">here</a>
+ * </param>
  * <param name="oldkeys">A map (bitmask) of the keys held prior to the current change - see
- * <a href="http://wiki.sa-mp.com/wiki/Keys">here</a></param>
+ * <a href="https://www.open.mp/docs/scripting/resources/keys">here</a></param>
  * <seealso name="GetPlayerKeys" />
  * <remarks>This callback can also be called by NPC.</remarks>
  * <remarks>
@@ -3176,4 +3364,3 @@ forward OnPlayerConnect(playerid);
  * </returns>
  */
 forward OnPlayerDisconnect(playerid, reason);
-

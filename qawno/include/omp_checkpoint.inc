@@ -9,7 +9,7 @@
  *     This Source Code Form is subject to the terms of the Mozilla Public License,
  *     v. 2.0. If a copy of the MPL was not distributed with this file, You can
  *     obtain one at http://mozilla.org/MPL/2.0/.
- *    
+ *
  *     The original code is copyright (c) 2023, open.mp team and contributors.
  *   </license>
  *   <summary pawndoc="true">
@@ -32,35 +32,50 @@
 #define CP_TYPE: __TAG(CP_TYPE):
 enum CP_TYPE:__CP_TYPE
 {
-	CP_TYPE_GROUND_NORMAL                  = 0,
-	CP_TYPE_GROUND_FINISH                  = 1,
-	CP_TYPE_GROUND_EMPTY                   = 2,
-	CP_TYPE_AIR_NORMAL                     = 3,
-	CP_TYPE_AIR_FINISH                     = 4,
-	CP_TYPE_AIR_ROTATING                   = 5,
-	CP_TYPE_AIR_STROBING                   = 6,
-	CP_TYPE_AIR_SWINGING                   = 7,
-	CP_TYPE_AIR_BOBBING                    = 8
+	UNKNOWN_CP_TYPE                            = -1,
+	CP_TYPE_GROUND_NORMAL                      = 0,
+	CP_TYPE_GROUND_FINISH                      = 1,
+	CP_TYPE_GROUND_EMPTY                       = 2,
+	CP_TYPE_AIR_NORMAL                         = 3,
+	CP_TYPE_AIR_FINISH                         = 4,
+	CP_TYPE_AIR_ROTATING                       = 5,
+	CP_TYPE_AIR_STROBING                       = 6,
+	CP_TYPE_AIR_SWINGING                       = 7,
+	CP_TYPE_AIR_BOBBING                        = 8
 }
 static stock CP_TYPE:_@CP_TYPE() { return __CP_TYPE; }
 
+#define UNKNOWN_CP_TYPE                        (CP_TYPE:-1)
+#define CP_TYPE_GROUND_NORMAL                  (CP_TYPE:0)
+#define CP_TYPE_GROUND_FINISH                  (CP_TYPE:1)
+#define CP_TYPE_GROUND_EMPTY                   (CP_TYPE:2)
+#define CP_TYPE_AIR_NORMAL                     (CP_TYPE:3)
+#define CP_TYPE_AIR_FINISH                     (CP_TYPE:4)
+#define CP_TYPE_AIR_ROTATING                   (CP_TYPE:5)
+#define CP_TYPE_AIR_STROBING                   (CP_TYPE:6)
+#define CP_TYPE_AIR_SWINGING                   (CP_TYPE:7)
+#define CP_TYPE_AIR_BOBBING                    (CP_TYPE:8)
+
 /*
-                                                                  
-    88888888ba   88                                                   
-    88      "8b  88                                                   
-    88      ,8P  88                                                   
-    88aaaaaa8P'  88  ,adPPYYba,  8b       d8   ,adPPYba,  8b,dPPYba,  
-    88""""""'    88  ""     `Y8  `8b     d8'  a8P_____88  88P'   "Y8  
-    88           88  ,adPPPPP88   `8b   d8'   8PP"""""""  88          
-    88           88  88,    ,88    `8b,d8'    "8b,   ,aa  88          
-    88           88  `"8bbdP"Y8      Y88'      `"Ybbd8"'  88          
-                                     d8'                              
-                                    d8'                               
+                                                                           
+    888b      88                       88                                      
+    8888b     88                ,d     ""                                      
+    88 `8b    88                88                                             
+    88  `8b   88  ,adPPYYba,  MM88MMM  88  8b       d8   ,adPPYba,  ,adPPYba,  
+    88   `8b  88  ""     `Y8    88     88  `8b     d8'  a8P_____88  I8[    ""  
+    88    `8b 88  ,adPPPPP88    88     88   `8b   d8'   8PP"""""""   `"Y8ba,   
+    88     `8888  88,    ,88    88,    88    `8b,d8'    "8b,   ,aa  aa    ]8I  
+    88      `888  `"8bbdP"Y8    "Y888  88      "8"       `"Ybbd8"'  `"YbbdP"'  
+                                                                           
+                                                                           
 
 */
 
 /*
-native #Player Checkpoints();
+native # Player Checkpoints();
+native       Player Checkpoints(
+native      ====================(
+native
 */
 
 /**
@@ -168,22 +183,10 @@ native bool:IsPlayerCheckpointActive(playerid);
 native bool:GetPlayerCheckpoint(playerid, &Float:centreX = 0.0, &Float:centreY = 0.0, &Float:centreZ = 0.0, &Float:radius = 0.0);
 
 /*
-                                                 
-    88888888ba                                       
-    88      "8b                                      
-    88      ,8P                                      
-    88aaaaaa8P'  ,adPPYYba,   ,adPPYba,   ,adPPYba,  
-    88""""88'    ""     `Y8  a8"     ""  a8P_____88  
-    88    `8b    ,adPPPPP88  8b          8PP"""""""  
-    88     `8b   88,    ,88  "8a,   ,aa  "8b,   ,aa  
-    88      `8b  `"8bbdP"Y8   `"Ybbd8"'   `"Ybbd8"'  
-                                                 
-                                                 
-
-*/
-
-/*
-native #Race Checkpoints();
+native # Race Checkpoints();
+native        Race Checkpoints(
+native      ====================(
+native
 */
 
 /**
@@ -399,4 +402,3 @@ forward OnPlayerEnterRaceCheckpoint(playerid);
  * </returns>
  */
 forward OnPlayerLeaveRaceCheckpoint(playerid);
-

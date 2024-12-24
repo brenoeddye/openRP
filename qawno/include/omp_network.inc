@@ -9,7 +9,7 @@
  *     This Source Code Form is subject to the terms of the Mozilla Public License,
  *     v. 2.0. If a copy of the MPL was not distributed with this file, You can
  *     obtain one at http://mozilla.org/MPL/2.0/.
- *    
+ *
  *     The original code is copyright (c) 2023, open.mp team and contributors.
  *   </license>
  *   <summary pawndoc="true">
@@ -33,8 +33,9 @@
 #define CONNECTION_STATUS: __TAG(CONNECTION_STATUS):
 enum CONNECTION_STATUS:__CONNSTAT
 {
+	UNKNOWN_CONNECTION_STATUS                  = -1,
+	CONNECTION_STATUS_NO_ACTION                = 0,
 #if __namemax > 31
-	CONNECTION_STATUS_NO_ACTION,
 	CONNECTION_STATUS_DISCONNECT_ASAP,
 	CONNECTION_STATUS_DISCONNECT_ASAP_SILENTLY,
 	CONNECTION_STATUS_DISCONNECT_ON_NO_ACK,
@@ -42,9 +43,9 @@ enum CONNECTION_STATUS:__CONNSTAT
 	CONNECTION_STATUS_HANDLING_CONNECTION_REQUEST,
 	CONNECTION_STATUS_UNVERIFIED_SENDER,
 	CONNECTION_STATUS_SET_ENCRYPTION_ON_MULTIPLE_16_BYTE_PACKET,
-	CONNECTION_STATUS_CONNECTED,
 #endif
-	CONNSTAT_NO_ACTION = 0,
+	CONNECTION_STATUS_CONNECTED                = 8,
+	CONNSTAT_NO_ACTION                         = 0,
 	CONNSTAT_DISCONNECT_ASAP,
 	CONNSTAT_DISCONNECT_ASAP_SILNT,
 	CONNSTAT_DISCONNECT_ON_NO_ACK,
@@ -56,6 +57,28 @@ enum CONNECTION_STATUS:__CONNSTAT
 }
 static stock CONNECTION_STATUS:_@CONNECTION_STATUS() { return __CONNSTAT; }
 
+#define UNKNOWN_CONNECTION_STATUS              (CONNECTION_STATUS:-1)
+#define CONNECTION_STATUS_NO_ACTION            (CONNECTION_STATUS:0)
+#if __namemax > 31
+#define CONNECTION_STATUS_DISCONNECT_ASAP      (CONNECTION_STATUS:1)
+#define CONNECTION_STATUS_DISCONNECT_ASAP_SILENTLY (CONNECTION_STATUS:2)
+#define CONNECTION_STATUS_DISCONNECT_ON_NO_ACK (CONNECTION_STATUS:3)
+#define CONNECTION_STATUS_REQUESTED_CONNECTION (CONNECTION_STATUS:4)
+#define CONNECTION_STATUS_HANDLING_CONNECTION_REQUEST (CONNECTION_STATUS:5)
+#define CONNECTION_STATUS_UNVERIFIED_SENDER    (CONNECTION_STATUS:6)
+#define CONNECTION_STATUS_SET_ENCRYPTION_ON_MULTIPLE_16_BYTE_PACKET (CONNECTION_STATUS:7)
+#endif
+#define CONNECTION_STATUS_CONNECTED            (CONNECTION_STATUS:8)
+#define CONNSTAT_NO_ACTION                     (CONNECTION_STATUS:0)
+#define CONNSTAT_DISCONNECT_ASAP               (CONNECTION_STATUS:1)
+#define CONNSTAT_DISCONNECT_ASAP_SILNT         (CONNECTION_STATUS:2)
+#define CONNSTAT_DISCONNECT_ON_NO_ACK          (CONNECTION_STATUS:3)
+#define CONNSTAT_REQUESTED_CONNECTION          (CONNECTION_STATUS:4)
+#define CONNSTAT_HANDLING_CONN_REQ             (CONNECTION_STATUS:5)
+#define CONNSTAT_UNVERIFIED_SENDER             (CONNECTION_STATUS:6)
+#define CONNSTAT_SET_ENCRYPTION                (CONNECTION_STATUS:7)
+#define CONNSTAT_CONNECTED                     (CONNECTION_STATUS:8)
+
 /// <p/>
 /**
  * <library>omp_network</library>
@@ -64,11 +87,17 @@ static stock CONNECTION_STATUS:_@CONNECTION_STATUS() { return __CONNSTAT; }
 #define DOWNLOAD_REQUEST: __TAG(DOWNLOAD_REQUEST):
 enum DOWNLOAD_REQUEST:__DOWNLOAD_REQUEST
 {
+	UNKNOWN_DOWNLOAD_REQUEST                   = -1,
 	DOWNLOAD_REQUEST_EMPTY,
 	DOWNLOAD_REQUEST_MODEL_FILE,
 	DOWNLOAD_REQUEST_TEXTURE_FILE
 }
 static stock DOWNLOAD_REQUEST:_@DOWNLOAD_REQUEST() { return __DOWNLOAD_REQUEST; }
+
+#define UNKNOWN_DOWNLOAD_REQUEST               (DOWNLOAD_REQUEST:-1)
+#define DOWNLOAD_REQUEST_EMPTY                 (DOWNLOAD_REQUEST:0)
+#define DOWNLOAD_REQUEST_MODEL_FILE            (DOWNLOAD_REQUEST:1)
+#define DOWNLOAD_REQUEST_TEXTURE_FILE          (DOWNLOAD_REQUEST:2)
 
 /*
                                                                            
@@ -98,7 +127,7 @@ static stock DOWNLOAD_REQUEST:_@DOWNLOAD_REQUEST() { return __DOWNLOAD_REQUEST; 
  * <returns>This function always returns <b><c>1</c></b>, even if the function failed to execute (player
  * specified doesn't exist).</returns>
  */
-native Kick(playerid);
+native bool:Kick(playerid);
 
 /**
  * <library>omp_network</library>
@@ -113,7 +142,7 @@ native Kick(playerid);
  * with SendClientMessage) will not reach the player.  A timer must be used to delay the ban.</remarks>
  * <remarks></remarks>
  */
-native Ban(playerid);
+native bool:Ban(playerid);
 
 /**
  * <library>omp_network</library>
@@ -125,7 +154,7 @@ native Ban(playerid);
  * <remarks>Any action taken directly before Ban() (such as sending a message
  * with SendClientMessage) will not reach the player.  A timer must be used to delay the ban.</remarks>
  */
-native BanEx(playerid, const reason[]);
+native bool:BanEx(playerid, const reason[]);
 
 /**
  * <library>omp_network</library>
@@ -142,7 +171,7 @@ native BanEx(playerid, const reason[]);
  * will block all IPs where the first two octets are <b><c>6</c></b> and <b><c>9</c></b> respectively.
  *  Any number can be in place of an asterisk.</remarks>
  */
-native BlockIpAddress(const ipAddress[], timeMS);
+native bool:BlockIpAddress(const ipAddress[], timeMS);
 
 /**
  * <library>omp_network</library>
@@ -151,7 +180,7 @@ native BlockIpAddress(const ipAddress[], timeMS);
  * <seealso name="BlockIpAddress" />
  * <seealso name="OnIncomingConnection" />
  */
-native UnBlockIpAddress(const ipAddress[]);
+native bool:UnBlockIpAddress(const ipAddress[]);
 
 /**
  * <library>omp_network</library>
@@ -176,7 +205,7 @@ native bool:IsPlayerAdmin(playerid);
 /**
  * <library>omp_player</library>
  */
-native SetPlayerAdmin(playerid, bool:admin);
+native bool:SetPlayerAdmin(playerid, bool:admin);
 
 /**
  * <library>omp_network</library>
@@ -190,7 +219,22 @@ native SetPlayerAdmin(playerid, bool:admin);
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  * <remarks>This function will result in <a href="#OnRconCommand">OnRconCommand</a> being called.</remarks>
  */
-native SendRconCommand(const format[], OPEN_MP_TAGS:...);
+native bool:SendRconCommand(const format[], OPEN_MP_TAGS:...);
+
+/**
+ * <library>omp_network</library>
+ * <summary>Sends an RCON (Remote Console) command.</summary>
+ * <param name="format">The RCON command to be executed.  May be optionally formatted.</param>
+ * <seealso name="IsPlayerAdmin" />
+ * <seealso name="OnRconCommand" />
+ * <seealso name="OnRconLoginAttempt" />
+ * <remarks>Does not support login, due to the lack of a 'playerid' parameter.</remarks>
+ * <remarks>'password 0' will remove the server's password if one is set.</remarks>
+ * <returns>This function always returns <b><c>1</c></b>.</returns>
+ * <remarks>This function will result in <a href="#OnRconCommand">OnRconCommand</a> being called.</remarks>
+ */
+#pragma deprecated Use `SendRconCommand`.
+native bool:SendRconCommandf(const format[], OPEN_MP_TAGS:...) = SendRconCommand;
 
 /**
  * <library>omp_network</library>
@@ -205,6 +249,15 @@ native SendRconCommand(const format[], OPEN_MP_TAGS:...);
  * <returns><b><c>1</c></b> on success and <b><c>0</c></b> on failure (if player specified doesn't exist).</returns>
  */
 native GetPlayerVersion(playerid, version[], len = sizeof (version));
+
+/**
+ * <library>omp_network</library>
+ * <summary>Get a players unique ID.</summary>
+ * <param name="playerid">The player to get the unique ID of</param>
+ * <param name="serial">Where to save the unique ID</param>
+ * <param name="len">The size of "output" (the serial)</param>
+ */
+native gpci(playerid, serial[], len = sizeof (serial));
 
 /**
  * <library>omp_network</library>
@@ -263,25 +316,13 @@ native GetPlayerPing(playerid);
  * <param name="memoryOffset">The offset from the base address</param>
  * <param name="byteCount">The number of bytes to check</param>
  */
-native SendClientCheck(playerid, type, memoryAddress, memoryOffset, byteCount);
+native bool:SendClientCheck(playerid, type, memoryAddress, memoryOffset, byteCount);
 
 /*
-                                                                                       
-    888b      88                                                                           
-    8888b     88                ,d                  ,d                   ,d                
-    88 `8b    88                88                  88                   88                
-    88  `8b   88   ,adPPYba,  MM88MMM  ,adPPYba,  MM88MMM  ,adPPYYba,  MM88MMM  ,adPPYba,  
-    88   `8b  88  a8P_____88    88     I8[    ""    88     ""     `Y8    88     I8[    ""  
-    88    `8b 88  8PP"""""""    88      `"Y8ba,     88     ,adPPPPP88    88      `"Y8ba,   
-    88     `8888  "8b,   ,aa    88,    aa    ]8I    88,    88,    ,88    88,    aa    ]8I  
-    88      `888   `"Ybbd8"'    "Y888  `"YbbdP"'    "Y888  `"8bbdP"Y8    "Y888  `"YbbdP"'  
-                                                                                       
-                                                                                       
-
-*/
-
-/*
-native #Netstats();
+native # Netstats();
+native            Netstats(
+native      ====================(
+native
 */
 
 /**
@@ -418,8 +459,9 @@ native NetStats_MessagesRecvPerSecond(playerid);
  * 1.0% is outright bad.</remarks>
  * <remarks>This function has been found to be currently unreliable the output is not as expected when
  * compared to the client.  Therefore this function should not be used as a packet loss kicker. </remarks>
- * <remarks>A more accurate packetloss function can be found here: <a href="http://forum.sa-mp.com/showpost.php?p=2488911&amp;postcount=984">
- * http://forum.sa-mp.com/showpost.php?p=2488911&amp;postcount=984</a></remarks>
+ * <remarks>A more accurate packetloss function can be found here:
+ * <a href="https://sampforum.blast.hk/showthread.php?tid=281&pid=2488911#pid2488911">
+ * https://sampforum.blast.hk/showthread.php?tid=281&pid=2488911#pid2488911</a></remarks>
  * <returns>The percentage packet loss as a float. <b><c>0.0</c></b> if player not connected.</returns>
  */
 native Float:NetStats_PacketLossPercent(playerid);
@@ -480,22 +522,10 @@ native CONNECTION_STATUS:NetStats_ConnectionStatus(playerid);
 native NetStats_GetIpPort(playerid, output[], size = sizeof (output));
 
 /*
-                                                                                                            
-    88888888888                                                                                             88  
-    88                                                                  ,d       ,d                         88  
-    88                                                                  88       88                         88  
-    88aaaaa   ,adPPYba,   8b,dPPYba,  88,dPYba,,adPYba,   ,adPPYYba,  MM88MMM  MM88MMM  ,adPPYba,   ,adPPYb,88  
-    88"""""  a8"     "8a  88P'   "Y8  88P'   "88"    "8a  ""     `Y8    88       88    a8P_____88  a8"    `Y88  
-    88       8b       d8  88          88      88      88  ,adPPPPP88    88       88    8PP"""""""  8b       88  
-    88       "8a,   ,a8"  88          88      88      88  88,    ,88    88,      88,   "8b,   ,aa  "8a,   ,d88  
-    88        `"YbbdP"'   88          88      88      88  `"8bbdP"Y8    "Y888    "Y888  `"Ybbd8"'   `"8bbdP"Y8  
-                                                                                                            
-                                                                                                            
-
-*/
-
-/*
-native #Formatted();
+native # Formatted();
+native           Formatted(
+native      ====================(
+native
 */
 
 /**
@@ -537,7 +567,7 @@ native #Formatted();
  * </remarks>
  * <returns>This function always returns <b><c>1</c></b>.</returns>
  */
-native GetNetworkStats(output[], size = sizeof (output));
+native bool:GetNetworkStats(output[], size = sizeof (output));
 
 /**
  * <library>omp_network</library>
@@ -559,51 +589,7 @@ native GetNetworkStats(output[], size = sizeof (output));
  * if the player has quit normally.  It usually returns accurate data if the player has been kicked
  * or has timed out.</remarks>
  */
-native GetPlayerNetworkStats(playerid, output[], size = sizeof (output));
-
-/*
-                                                                                                                             
-    88888888ba,                                                                                                          88  
-    88      `"8b                                                                              ,d                         88  
-    88        `8b                                                                             88                         88  
-    88         88   ,adPPYba,  8b,dPPYba,   8b,dPPYba,   ,adPPYba,   ,adPPYba,  ,adPPYYba,  MM88MMM  ,adPPYba,   ,adPPYb,88  
-    88         88  a8P_____88  88P'    "8a  88P'   "Y8  a8P_____88  a8"     ""  ""     `Y8    88    a8P_____88  a8"    `Y88  
-    88         8P  8PP"""""""  88       d8  88          8PP"""""""  8b          ,adPPPPP88    88    8PP"""""""  8b       88  
-    88      .a8P   "8b,   ,aa  88b,   ,a8"  88          "8b,   ,aa  "8a,   ,aa  88,    ,88    88,   "8b,   ,aa  "8a,   ,d88  
-    88888888Y"'     `"Ybbd8"'  88`YbbdP"'   88           `"Ybbd8"'   `"Ybbd8"'  `"8bbdP"Y8    "Y888  `"Ybbd8"'   `"8bbdP"Y8  
-                               88                                                                                            
-                               88                                                                                            
-
-*/
-
-/*
-native #Deprecated();
-*/
-
-/**
- * <library>omp_network</library>
- * <summary>Sends an RCON (Remote Console) command.</summary>
- * <param name="format">The RCON command to be executed.  May be optionally formatted.</param>
- * <seealso name="IsPlayerAdmin" />
- * <seealso name="OnRconCommand" />
- * <seealso name="OnRconLoginAttempt" />
- * <remarks>Does not support login, due to the lack of a 'playerid' parameter.</remarks>
- * <remarks>'password 0' will remove the server's password if one is set.</remarks>
- * <returns>This function always returns <b><c>1</c></b>.</returns>
- * <remarks>This function will result in <a href="#OnRconCommand">OnRconCommand</a> being called.</remarks>
- */
-#pragma deprecated Use `SendRconCommand`
-native SendRconCommandf(const format[], OPEN_MP_TAGS:...) = SendRconCommand;
-
-/**
- * <library>omp_network</library>
- * <summary>Get a players unique ID.</summary>
- * <param name="playerid">The player to get the unique ID of</param>
- * <param name="serial">Where to save the unique ID</param>
- * <param name="len">The size of "output" (the serial)</param>
- */
-#pragma deprecated Use `GPCI`.
-native gpci(playerid, serial[], len = sizeof (serial));
+native bool:GetPlayerNetworkStats(playerid, output[], size = sizeof (output));
 
 /*
                                                                                                   
@@ -651,8 +637,8 @@ forward OnRconLoginAttempt(ip[], password[], success);
 
 /**
  * <summary>This callback is called when a player finishes downloading custom models.  For more information
- * on how to add custom models to your server, see <a href="http://forum.sa-mp.com/showthread.php?t=644105">the
- * release thread</a> and <a href="http://forum.sa-mp.com/showthread.php?t=644123">this tutorial</a>.</summary>
+ * on how to add custom models to your server, see <a href="https://sampforum.blast.hk/showthread.php?tid=644105">the
+ * release thread</a> and <a href="https://sampforum.blast.hk/showthread.php?tid=644123">this tutorial</a>.</summary>
  * <param name="playerid">The ID of the player that finished downloading custom models</param>
  * <param name="virtualworld">The ID of the virtual world the player finished downloading custom models
  * for</param>
@@ -694,4 +680,3 @@ forward OnPlayerRequestDownload(playerid, DOWNLOAD_REQUEST:type, crc);
  * </returns>
  */
 forward OnRconCommand(cmd[]);
-

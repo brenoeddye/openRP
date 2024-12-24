@@ -231,11 +231,14 @@ native flength(File:handle);
  * <param name="handle">The file handle returned by <a href="#fopen">fopen</a> or <a href="#ftemp">ftemp</a></param>
  * <remarks>Actually just calls <c>flength</c> as that has to force a flush to be accurate.</remarks>
  */
-stock bool:fflush(File:handle)
+/*
+native bool:fflush(File:handle);
+*/
+stock bool:fflush(File:__handle)
 {
-	if (handle)
+	if (__handle)
 	{
-		flength(handle);
+		flength(__handle);
 		return true;
 	}
 	return false;
@@ -254,9 +257,11 @@ native fexist(const filename[]);
  * <summary>Return the size and the time stamp of a file.</summary>
  * <param name="filename">The name of the file.</param>
  * <param name="size">If the function is successful, this param-eter holds the size of the file on return.</param>
- * <param name="timestamp">If the function is successful, this parameter holds the time of the last modification of the file on return.</param>
+ * <param name="timestamp">If the function is successful, this parameter holds the time of the last modification of the file on
+ * return.</param>
  * <param name="attrib">If the function is successful, this parameter holds the file attributes.</param>
- * <param name="inode">If the function is successful, this parameter holds inode number of the file.  An inode number is a number that uniquely identifies a file, and it usually indicates the physical position of (the start of) the file on the disk or memory card.</param>
+ * <param name="inode">If the function is successful, this parameter holds inode number of the file.  An inode number is a number that
+ * uniquely identifies a file, and it usually indicates the physical position of (the start of) the file on the disk or memory card.</param>
  * <remarks>
  * In contrast to the function flength, this function does not need the file to be opened for querying its size.
  * <p/>
@@ -309,7 +314,8 @@ native filecrc(const filename[]);
 /**
  * <library>file</library>
  * <summary>Returns the free disk space.</summary>
- * <param name="volume">The name of the volume on systems that support multiple disks or multiple memory cards.  On single-volume systems, it is optional.</param>
+ * <param name="volume">The name of the volume on systems that support multiple disks or multiple memory cards.  On single-volume systems, it
+ * is optional.</param>
  * <remarks>
  * The maximum size that can be supported 2048 GiB (2 terabyte).
  * </remarks>
@@ -321,7 +327,8 @@ forward diskfree(const volume[] = "");
  * <library>file</library>
  * <summary>Set the file attributes.</summary>
  * <param name="filename">The name of the file.</param>
- * <param name="timestamp">Time of the last modification of the file.  When this parameter is set to zero, the time stamp of the file is not changed.</param>
+ * <param name="timestamp">Time of the last modification of the file.  When this parameter is set to zero, the time stamp of the file is not
+ * changed.</param>
  * <param name="attrib">A bit mask with the new attributes of the file.  When set to 0x0F, the attributes of the file are not changed.</param>
  * <remarks>
  * The time is in number of seconds since midnight at 1 January 1970: the start of the UNIX system epoch.
@@ -341,7 +348,7 @@ native bool:fattrib(const filename[], timestamp = 0, attrib = 0x0F);
  * <param name="size">The maximum size of parameter name (optional=<b><c>sizeof (name)</c></b>)</param>
  * <returns><b><c>true</c></b> on success, <b><c>false</c></b> on failure.</returns>
  */
-native bool:fmatch(filename[], const pattern[], index = 0, size = sizeof (filename));
+native bool:fmatch(const filename[], const pattern[], index = 0, size = sizeof (filename));
 
 /**
  * <library>file</library>
@@ -411,7 +418,7 @@ native readcfg(const cfgname[] = "", const section[] = "", const key[], value[],
  * <param name="section">The section to look for the key.  If this parameter is not set, the
  * function reads the key outside any section.</param>
  * <param name="key">The key whose value must be looked up.</param>
- * <param name="defvalue">The string to copy into parameter value in the case that the function
+ * <param name="defvalue">The value to return in the case that the function
  * cannot read the field from the INI file.</param>
  * <returns>The numeric value if the field, or the value of <c>defvalue</c> if the field was not
  * found in the section and/or at the key.</returns>
@@ -457,13 +464,11 @@ native bool:dfind(const pattern[], filename[], size = sizeof (filename), &idx);
 /**
  * <library>file</library>
  */
-#pragma deprecated Use `fcreatedir`.
 native bool:dcreate(const name[]) = fcreatedir;
 
 /**
  * <library>file</library>
  */
-#pragma deprecated Use `frename`.
 native bool:drename(const oldname[], const newname[]) = frename;
 
 /**
@@ -583,4 +588,3 @@ forward bool:operator>=(_:a, File:b);
  * <library>file</library>
  */
 forward bool:operator>=(File:a, _:b);
-

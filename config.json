@@ -50,7 +50,7 @@
     },
     "max_bots": 0,
     "max_players": 50,
-    "name": "Legacy RPG - 0.1a",
+    "name": "openRP - A Simple base RP Script",
     "network": {
         "acks_limit": 3000,
         "aiming_sync_rate": 30,
@@ -88,9 +88,9 @@
     "rcon": {
         "allow_teleport": false,
         "enable": false,
-        "password": "thenewlegacy123"
+        "password": "openrp123"
     },
     "sleep": 5.0,
     "use_dyn_ticks": true,
-    "website": "legacygames.com"
+    "website": "open.mp"
 }

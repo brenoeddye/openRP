@@ -38,15 +38,18 @@
  * <seealso name="printf"/>
  * <return>This function always returns 0.</return>
  */
-stock print(const string[], foreground = -1, background = -1)
+/*
+native print(const string[], foreground = -1, background = -1);
+*/
+stock print(const __string[], __foreground = -1, __background = -1)
 {
 	// Quote:
 	//
 	// > Note that a [...] host application may not support colours
 	//
 	// So we can just ignore them.
-	#pragma unused foreground, background
-	return __print(string);
+	#pragma unused __foreground, __background
+	return __print(__string);
 }
 
 /**
@@ -122,7 +125,7 @@ forward getchar(bool:echo = true);
  * <seealso name="getchar"/>
  * <return>The number of characters read, excluding the terminating null character.</return>
  * <remarks>Function <c>getstring</c> stops reading when either the enter key is typed or the
- * maximum length is reached.  The maximum length is in cells (not characters) and it includes a 
+ * maximum length is reached.  The maximum length is in cells (not characters) and it includes a
  * terminating null character.  The function can read both packed and unpacked strings; when reading
  * a packed string, the function may read more characters than the size parameter specifies, since
  * each cell holds multiple characters.</remarks>
@@ -172,4 +175,3 @@ forward bool:gotoxy(x = 1, y = 1);
  * <c>cyan (6)</c>, and <c>white (7)</c>.</remarks>
  */
 forward setattr(foreground = -1, background = -1);
-

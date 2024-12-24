@@ -1,0 +1,1 @@
+[24/12/2024 15:17:39] [plugins/mysql] error #1146 while executing query "SELECT `Password`, `ID` FROM `Users` WHERE `Name`='Eddye'": Table 'open-rp.users' doesn't exist
