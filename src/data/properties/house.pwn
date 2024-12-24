@@ -1,5 +1,3 @@
-new house_pickups[MAX_HOUSES];
-
 forward createHouse(playerid, type, ownerid, interiorid, price, posx, posy, posz);
 forward deleteHouse(houseid);
 forward loadHouses();
@@ -10,14 +8,11 @@ public createHouse(playerid, type, ownerid, interiorid, price, posx, posy, posz)
     mysql_format(ConnectSQL, Query, sizeof(Query), "INSERT INTO `houses` (`Type`, `OwnerID`, `InteriorID`, `Price`, `PosX`, `PosY`, `PosZ`) VALUES (%d, %d, %d, %d, %f, %f, %f)", type, ownerid, interiorid, price, posx, posy, posz);
     mysql_query(ConnectSQL, Query);
 
-    cache_insert_id(ConnectSQL, houseid);
+    houseid = cache_insert_id();
 
     if (houseid < MAX_HOUSES) {
-        //Add pickup
-        house_pickups[houseid] = CreatePickup(1273, 1, posx, posy, posz, -1);
-
-        //Add radar local
-        SetPlayerMapIcon(playerid, houseid, posx, posy, posz, 31, 0, MAPICON_LOCAL);
+        House[houseid][MapIcon] = CreateDynamicMapIcon(posx, posy, posz, 32, 0x0000FFFF, -1, -1, -1, 300.0);
+	    House[houseid][Enter_HousePickup] = CreateDynamicPickup(1273, 1, posx, posy, posz, houseid);
 
         //Add 3D Text
         format(houseText, sizeof(houseText), "Casa {#aefa97}%d\n{#5fda3a}$%d{#008080}\n", houseid, price);
@@ -25,7 +20,7 @@ public createHouse(playerid, type, ownerid, interiorid, price, posx, posy, posz)
 
         SendClientMessage(playerid, PRIMARY_COLOR, "Casa criada com sucesso!");
 
-        printf("[NEW HOUSE] id: %d, price: %d", houseid, price);
+        printf("[Server] New house created! id: %d, price: %d", houseid, price);
     } else {
         printf("Erro: houseid excede o limite máximo (%d).", MAX_HOUSES);
     }
