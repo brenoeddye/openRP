@@ -78,7 +78,8 @@
     "pawn": {
         "legacy_plugins": [
             "mysql",
-            "sscanf"
+            "sscanf",
+            "streamer"
         ],
         "main_scripts": [
             "main"

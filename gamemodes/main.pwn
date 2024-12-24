@@ -17,6 +17,7 @@
 #include <YSI\YSI_Visual\y_commands>
 #include <sscanf2>
 #include <sscanffix>
+#include <streamer>
 
 main() {
 	print("\n-----------------------------------");
