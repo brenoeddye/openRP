@@ -46,8 +46,6 @@ public loadAccount(playerid) {
     SetSpawnInfo(playerid, 0, Player[playerid][Skin], Player[playerid][PosX], Player[playerid][PosY], Player[playerid][PosZ], Player[playerid][PosA], 0, 0, 0, 0 ,0, 0);
     SpawnPlayer(playerid);
 
-    SetPlayerSkin(playerid, Player[playerid][Skin]);
-
     return true;
 } 
 

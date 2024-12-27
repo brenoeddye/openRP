@@ -20,6 +20,7 @@
 #define _streamer_included
 
 #include <a_samp>
+#include <open.mp>
 
 // Definitions
 

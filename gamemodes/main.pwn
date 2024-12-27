@@ -12,12 +12,12 @@
 //------------------------------------------------------------------------------
 // Libraries
 #include <a_mysql>
+#include <streamer>
 #include <YSI\YSI_coding\y_hooks>
 #include <YSI\YSI_coding\y_timers>
 #include <YSI\YSI_Visual\y_commands>
 #include <sscanf2>
 #include <sscanffix>
-#include <streamer>
 
 main() {
 	print("\n-----------------------------------");

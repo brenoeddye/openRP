@@ -139,3 +139,42 @@
 [24/12/2024 19:49:49] [WARNING] mysql_connect: no password specified
 [24/12/2024 19:57:24] [WARNING] mysql_connect: no password specified
 [24/12/2024 19:57:30] [WARNING] mysql_connect: no password specified
+[26/12/2024 23:33:44] [WARNING] mysql_connect: no password specified
+[26/12/2024 23:33:48] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[26/12/2024 23:33:57] [WARNING] mysql_connect: no password specified
+[26/12/2024 23:34:48] [WARNING] mysql_connect: no password specified
+[26/12/2024 23:46:17] [WARNING] mysql_connect: no password specified
+[26/12/2024 23:53:27] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:01:40] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:02:57] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:03:48] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:05:17] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:07:27] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:07:45] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:07:51] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:16:26] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:18:16] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:18:41] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:21:38] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:29:10] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:31:00] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:31:04] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:31:14] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:31:18] [WARNING] mysql_connect: no password specified
+[27/12/2024 00:33:25] [WARNING] mysql_connect: no password specified
+[27/12/2024 10:42:44] [WARNING] mysql_connect: no password specified
+[27/12/2024 10:42:48] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[27/12/2024 10:42:53] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[27/12/2024 10:42:59] [WARNING] mysql_connect: no password specified
+[27/12/2024 10:44:46] [WARNING] mysql_connect: no password specified
+[27/12/2024 11:24:46] [WARNING] mysql_connect: no password specified
+[27/12/2024 11:31:41] [WARNING] mysql_connect: no password specified
+[27/12/2024 16:39:20] [WARNING] mysql_connect: no password specified
+[27/12/2024 16:39:24] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[27/12/2024 16:39:28] [ERROR] CConnection::CConnection - establishing connection to MySQL database failed: #2002 'Can't connect to MySQL server on 'localhost' (10061)'
+[27/12/2024 16:39:35] [WARNING] mysql_connect: no password specified
+[27/12/2024 16:44:08] [WARNING] mysql_connect: no password specified
+[27/12/2024 16:45:56] [WARNING] mysql_connect: no password specified
+[27/12/2024 16:46:02] [WARNING] mysql_connect: no password specified
+[27/12/2024 17:18:17] [WARNING] mysql_connect: no password specified
+[27/12/2024 17:19:04] [WARNING] mysql_connect: no password specified
